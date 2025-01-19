@@ -14,8 +14,8 @@ d3.csv('/markets.csv').then((marketsData) => {
 
   drawMap({
     container,
-    width: window.innerWidth > 1440 ? 1500 : 1400,
-    height: 680,
+    width: window.innerWidth > 1440 ? 1500 : window.innerWidth < 768  ? 1000 : 1400,
+    height: window.innerWidth < 768 ? 500 : 680,
     dma,
     markets,
   })

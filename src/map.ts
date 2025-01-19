@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import { drawPopup } from './popup'
 
 export function drawMap(params: any) {
   const container = params.container
@@ -112,6 +113,7 @@ export function drawMap(params: any) {
       d3.select(this).style('opacity', 1)
       event.stopPropagation()
       zooming(event, d)
+      drawPopup(svg, width, height)
     })
 
   // reset
@@ -119,6 +121,7 @@ export function drawMap(params: any) {
     d3.selectAll('.dma').style('opacity', 1)
     reset()
     isClicked = false
+    svg.selectAll('.popup-object').remove()
   })
 
   // Zoom event
