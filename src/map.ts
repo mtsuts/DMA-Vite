@@ -7,6 +7,10 @@ export function drawMap(params: any) {
   const dma = params.dma
   const marketsData = params.markets
 
+  const scaleExtent = [1, 8] as [number, number]
+  let transform = null
+  let isClicked = false
+
   // append svg to container
   const svg = container
     .append('svg')
@@ -14,9 +18,9 @@ export function drawMap(params: any) {
     .attr('height', height)
     .attr('viewBox', `0 0 ${width}  ${height}`)
 
+  // tooltip
   function drawTooltip(data: any) {
-    console.log(data)
-
+    if (isClicked) return
     const foreignObject = svg
       .append('foreignObject')
       .attr('x', 150)
@@ -64,18 +68,9 @@ export function drawMap(params: any) {
   const path = d3.geoPath().projection(projection)
   const dmaPath = g.append('g')
 
-  const dmaProperties = dma.features.map((d: any) => d.properties)
-  // const marketsMatch = dmaProperties.filter((d: any) =>
-  //   marketsData.some((x: any) => d.dma1 === x.DMA)
-  // )
-
-  // console.log(dmaProperties)
-  // console.log(marketsData)
-  // console.log(marketsMatch)
-
   const colorScale = d3
     .scaleOrdinal()
-    .domain(['Top Tier', 'Mid Tier', 'Non Broadcast'])
+    .domain(['Top Tier', 'Mid Tier', 'Non-Broadcast'])
     .range(['#6997ac', '#96bdcf', '#bbe0f3'])
 
   dmaPath
@@ -95,15 +90,66 @@ export function drawMap(params: any) {
     .attr('stroke', '#80807e')
     .attr('stroke-width', 0.5)
     .style('cursor', 'pointer')
+    .style('opacity', 1)
     .on('mouseover', function (this: SVGPathElement, event: any, d: any) {
       const properties = d.properties
-      const foundMarket = marketsData.find(
-        (x: any) => x.DMA === properties.dma1
-      ) || []
-      if(foundMarket.length === 0) return
+      const foundMarket =
+        marketsData.find((x: any) => x.DMA === properties.dma1) || []
+      if (foundMarket.length === 0) return
       drawTooltip(foundMarket)
     })
     .on('mouseleave', function (this: SVGPathElement) {
       svg.selectAll('.tooltip-object').remove()
     })
+    .on('click', function (this: SVGPathElement, event: any, d: any) {
+      const properties = d.properties
+      const foundMarket =
+        marketsData.find((x: any) => x.DMA === properties.dma1) || []
+      if (foundMarket.length === 0) return
+      isClicked = true
+      d3.selectAll('.dma').style('opacity', 0.8)
+      console.log(this)
+      d3.select(this).style('opacity', 1)
+      event.stopPropagation()
+      zooming(event, d)
+    })
+
+  // reset
+  svg.on('click', () => {
+    d3.selectAll('.dma').style('opacity', 1)
+    reset()
+    isClicked = false
+  })
+
+  // Zoom event
+  function zoomed(event: any) {
+    g.attr('transform', event.transform).on('wheel', null)
+    transform = event.transform
+  }
+
+  const zoom = d3.zoom().scaleExtent(scaleExtent).on('zoom', zoomed)
+
+  function zooming(event: any, d: any) {
+    const [[x0, y0], [x1, y1]] = path.bounds(d)
+    const scale = Math.min(
+      2,
+      2 / Math.max((x1 - x0) / width, (y1 - y0) / height)
+    )
+    const translateX = width / 2 - (scale * (x0 + x1)) / 2
+    const translateY = height / 2 - (scale * (y0 + y1)) / 2
+
+    svg
+      .transition()
+      .duration(1000)
+      .call(
+        zoom.transform,
+        d3.zoomIdentity.translate(translateX, translateY).scale(scale)
+      )
+  }
+
+  svg.call(zoom)
+
+  function reset() {
+    svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
+  }
 }
