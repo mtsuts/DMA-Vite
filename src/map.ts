@@ -4,7 +4,7 @@ export function drawMap(params: any) {
   const container = params.container
   const width = params.width
   const height = params.height
-  const usgeojson = params.usgeojson
+  const dma = params.dma
 
   // append svg to container
   const svg = container
@@ -15,24 +15,24 @@ export function drawMap(params: any) {
 
   const g = svg.append('g')
 
-  // path generator
-  const path = d3.geoPath()
+  const projection = d3
+    .geoAlbersUsa()
+    .scale(1200)
+    .translate([width / 2, height / 2])
 
-  // draw us state paths
-  g.selectAll('.state')
-    .data(usgeojson.features)
+  // path generator
+  const path = d3.geoPath().projection(projection) // Apply projection here
+  const dmaPath = g.append('g')
+
+
+  dmaPath
+    .selectAll('.dma')
+    .data(dma.features)
     .enter()
     .append('path')
-    .attr('class', 'state')
+    .attr('class', 'dma')
     .attr('d', path)
     .attr('fill', '#ccc')
-    .attr('stroke', '#333')
+    .attr('stroke', '#fff')
     .attr('stroke-width', 0.5)
-    .on('mouseover', function () {
-      console.log(d3.select(this))
-      d3.select(this).attr('fill', 'blue')
-    })
-    .on('mouseover', function () {
-      d3.select(this).attr('fill', '#ccc')
-    })
 }
