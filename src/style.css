@@ -9,12 +9,14 @@
 }
 
 body {
-  margin: 0px
+  margin: 0px;
+  background-image: url('/public/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0
 }
 
-.main-container {
-  margin: 8px;
-}
 
 .map-container {
   display: flex;
@@ -23,11 +25,26 @@ body {
 }
 
 .title {
-  font-size:20px;
+  font-size: 20px;
   text-align: center;
   margin-top: 20px
 }
 
+.tooltip {
+  border-radius: 10px;
+}
+
+.tooltip-row {
+  display: flex;
+}
+
+.tooltip-row-value {
+  margin-left: 4px;
+}
+
+.tooltip-row-title {
+  font-weight: 700;
+}
 
 a {
   font-weight: 500;
@@ -44,22 +61,11 @@ h1 {
   line-height: 1.1;
 }
 
-
-
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+  margin: 20px 0px 0px 20px;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
 
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
-}
 
 .card {
   padding: 2em;

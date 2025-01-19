@@ -1,0 +1,155 @@
+Priority,Market Type,State,DMA
+1,Top Tier,California,Los Angeles CA
+2,Top Tier,New York,New York NY
+3,Top Tier,Texas,Dallas-Ft. Worth TX
+4,Top Tier,Florida,Tampa et al FL
+5,Top Tier,Florida,Orlando et al FL
+6,Top Tier,Ohio,Cleveland et al OH
+7,Top Tier,North Carolina,Raleigh et al NC
+8,Top Tier,North Carolina,Charlotte NC
+9,Top Tier,Missouri,St. Louis MO
+10,Top Tier,Texas,San Antonio TX
+11,Top Tier,Ohio,Columbus OH
+12,Top Tier,Wisconsin,Milwaukee WI
+13,Top Tier,Ohio,Cincinnati OH
+14,Top Tier,Texas,Austin TX
+15,Top Tier,North Carolina,Greensboro et al NC
+16,Top Tier,South Carolina,Greenville et al SC-NC
+17,Top Tier,New York,Buffalo NY
+18,Top Tier,Missouri,Kansas City MO-KS
+19,Top Tier,New York,Albany et al NY
+20,Top Tier,Kentucky,Louisville KY
+21,Top Tier,Hawaii,Honolulu HI
+22,Top Tier,Alabama,Birmingham et al AL
+23,Top Tier,Texas,Harlingen et al TX
+24,Top Tier,Ohio,Dayton OH
+25,Top Tier,New York,Rochester NY
+26,Top Tier,New York,Syracuse NY
+27,Top Tier,Kentucky,Lexington KY
+28,Top Tier,South Carolina,Columbia SC
+29,Top Tier,South Carolina,Myrtle Beach et al SC
+30,Top Tier,Texas,El Paso et al TX-NM
+31,Mid Tier,Maine,Portland-Auburn ME
+32,Mid Tier,Wisconsin,Green Bay-Appleton WI
+33,Mid Tier,Wisconsin,Madison WI
+34,Mid Tier,Michigan,Flint-Saginaw et al MI
+35,Mid Tier,Nevada,Reno NV
+36,Mid Tier,Texas,Waco-Temple-Bryan TX
+37,Mid Tier,Michigan,Traverse City et al MI
+38,Mid Tier,California,Bakersfield CA
+39,Mid Tier,Washington,Yakima et al WA
+40,Mid Tier,North Carolina,Greenville et al NC
+41,Mid Tier,Indiana,Evansville IN
+42,Mid Tier,North Carolina,Wilmington NC
+43,Mid Tier,Nebraska,Lincoln et al NE
+44,Mid Tier,Ohio,Toledo OH
+45,Mid Tier,California,Palm Springs CA
+46,Mid Tier,Texas,Corpus Christi TX
+47,Mid Tier,Alabama,Montgomery-Selma AL
+48,Mid Tier,Texas,Beaumont-Port Arthur TX
+49,Mid Tier,Ohio,Youngstown OH
+50,Mid Tier,Oregon,Medford et al OR
+51,Mid Tier,Tennessee,Tri-Cities TN-VA
+52,Mid Tier,Wisconsin,La Crosse-Eau Claire WI
+53,Mid Tier,Wisconsin,Wausau-Rhinelander WI
+54,Mid Tier,California,Yuma-El Centro AZ-CA
+55,Mid Tier,New York,Binghamton NY
+56,Mid Tier,Maine,Bangor ME
+57,Mid Tier,Georgia,Columbus et al GA-AL
+58,Mid Tier,New York,Utica NY
+59,Mid Tier,New York,Watertown NY
+60,Mid Tier,Pennsylvania,Erie PA
+61,Mid Tier,Texas,Laredo TX
+62,Mid Tier,Montana,Missoula MT
+63,Mid Tier,Tennessee,Jackson TN
+64,Mid Tier,Montana,Billings MT
+65,Mid Tier,Minnesota,Rochester et al MN-IA
+66,Mid Tier,New York,Elmira et al NY
+67,Mid Tier,Colorado,Grand Junction et al CO
+68,Mid Tier,Michigan,Marquette MI
+69,Mid Tier,Montana,Butte-Bozeman MT
+70,Mid Tier,Ohio,Lima OH
+71,Mid Tier,Alabama,Dothan AL
+72,Mid Tier,Kentucky,Bowling Green KY
+73,Mid Tier,Wyoming,Cheyenne et al WY-NE
+74,Mid Tier,Wyoming,Casper-Riverton WY
+75,Mid Tier,Montana,Great Falls MT
+76,Mid Tier,Ohio,Zanesville OH
+77,Mid Tier,Maine,Presque Isle ME
+78,Mid Tier,Minnesota,Mankato MN
+79,Mid Tier,Montana,Helena MT
+80,Mid Tier,Michigan,Alpena MI
+81,Mid Tier,Nebraska,North Platte NE
+82,Non-Broadcast,Georgia,Atlanta GA
+83,Non-Broadcast,California,San Diego CA
+84,Non-Broadcast,Minnesota,Minneapolis-St. Paul MN
+85,Non-Broadcast,Tennessee,Nashville TN
+86,Non-Broadcast,Indiana,Indianapolis IN
+87,Non-Broadcast,Michigan,Grand Rapids et al MI
+88,Non-Broadcast,Massachusetts,Boston et al MA-NH
+89,Non-Broadcast,Louisiana,New Orleans LA
+90,Non-Broadcast,Michigan,Detroit MI
+91,Non-Broadcast,Tennessee,Knoxville TN
+92,Non-Broadcast,Alabama,Huntsville et al AL
+93,Non-Broadcast,Virginia,Norfolk et al VA
+94,Non-Broadcast,Tennessee,Chattanooga TN
+95,Non-Broadcast,Kentucky,Paducah et al KY-MO-IL
+96,Non-Broadcast,Oregon,Portland OR
+97,Non-Broadcast,Vermont,Burlington et al VT-NY
+98,Non-Broadcast,South Carolina,Charleston SC
+99,Non-Broadcast,California,Santa Barbara et al CA
+100,Non-Broadcast,Colorado,Denver CO
+101,Non-Broadcast,Washington,Spokane WA
+102,Non-Broadcast,Oregon,Eugene OR
+103,Non-Broadcast,Connecticut,Hartford & New Haven CT
+104,Non-Broadcast,West Virginia,Charleston et al WV
+105,Non-Broadcast,California,Sacramento et al CA
+106,Non-Broadcast,Minnesota,Duluth-Superior MN-WI
+107,Non-Broadcast,Massachusetts,Springfield-Holyoke MA
+108,Non-Broadcast,California,Monterey-Salinas CA
+109,Non-Broadcast,California,Chico-Redding CA
+110,Non-Broadcast,California,Fresno-Visalia CA
+111,Non-Broadcast,Texas,Houston TX
+112,Non-Broadcast,Georgia,Savannah GA
+113,Non-Broadcast,Texas,Wichita Fls et al TX-OK
+114,Non-Broadcast,Indiana,Terre Haute IN
+115,Non-Broadcast,Missouri,Columbia et al MO
+116,Non-Broadcast,Louisiana,Lafayette LA
+117,Non-Broadcast,Washington,Seattle-Tacoma WA
+118,Non-Broadcast,Nebraska,Omaha NE
+119,Non-Broadcast,Georgia,Macon GA
+120,Non-Broadcast,West Virginia,Clarksburg-Weston WV
+121,Non-Broadcast,California,San Francisco et al CA
+122,Non-Broadcast,Tennessee,Memphis TN
+123,Non-Broadcast,Louisiana,Baton Rouge LA
+124,Non-Broadcast,Missouri,Springfield MO
+125,Non-Broadcast,Colorado,Colorado Sprgs et al CO
+126,Non-Broadcast,Alabama,Mobile et al AL-FL
+127,Non-Broadcast,New Mexico,Albuquerque-Santa Fe NM
+128,Non-Broadcast,Illinois,Rockford IL
+129,Non-Broadcast,Florida,Panama City FL
+130,Non-Broadcast,West Virginia,Bluefield et al WV
+131,Non-Broadcast,Illinois,Quincy et al IL-MO-IA
+132,Non-Broadcast,South Dakota,Rapid City SD
+133,Non-Broadcast,Idaho,Idaho Falls et al ID-WY
+134,Non-Broadcast,California,Eureka CA
+135,Non-Broadcast,Illinois,Chicago IL
+136,Non-Broadcast,Georgia,Augusta-Aiken GA-SC
+137,Non-Broadcast,Pennsylvania,Wilkes Barre et al PA
+138,Non-Broadcast,Indiana,Ft. Wayne IN
+139,Non-Broadcast,Michigan,Lansing MI
+140,Non-Broadcast,Louisiana,Shreveport LA
+141,Non-Broadcast,Pennsylvania,Pittsburgh PA
+142,Non-Broadcast,Rhode Island,Providence et al RI-MA
+143,Non-Broadcast,Ohio,Wheeling et al WV-OH
+144,Non-Broadcast,North Dakota,Fargo-Valley City ND
+145,Non-Broadcast,West Virginia,Parkersburg WV
+146,Non-Broadcast,Texas,Tyler-Longview et al TX
+147,Non-Broadcast,Maryland,Salisbury MD
+148,Non-Broadcast,Mississippi,Columbus et al MS
+149,Non-Broadcast,Virginia,Richmond-Petersburg VA
+150,Non-Broadcast,Florida,Tallahassee et al FL-GA
+151,Non-Broadcast,Florida,Gainesville FL
+152,Non-Broadcast,Virginia,Roanoke-Lynchburg VA
+153,Non-Broadcast,Louisiana,Alexandria LA
+154,Non-Broadcast,Texas,Sherman-Ada TX-OK
