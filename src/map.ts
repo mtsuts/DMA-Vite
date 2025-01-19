@@ -9,7 +9,6 @@ export function drawMap(params: any) {
   const marketsData = params.markets
 
   const scaleExtent = [1, 8] as [number, number]
-  let transform = null
   let isClicked = false
 
   // append svg to container
@@ -92,7 +91,7 @@ export function drawMap(params: any) {
     .attr('stroke-width', 0.5)
     .style('cursor', 'pointer')
     .style('opacity', 1)
-    .on('mouseover', function (this: SVGPathElement, event: any, d: any) {
+    .on('mouseover', function (this: SVGPathElement, _event: any, d: any) {
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
@@ -113,7 +112,7 @@ export function drawMap(params: any) {
       d3.select(this).style('opacity', 1)
       event.stopPropagation()
       zooming(event, d)
-      drawPopup(svg, width, height)
+      drawPopup(svg)
     })
 
   // reset
@@ -127,12 +126,12 @@ export function drawMap(params: any) {
   // Zoom event
   function zoomed(event: any) {
     g.attr('transform', event.transform).on('wheel', null)
-    transform = event.transform
+
   }
 
   const zoom = d3.zoom().scaleExtent(scaleExtent).on('zoom', zoomed)
 
-  function zooming(event: any, d: any) {
+  function zooming(_event: any, d: any) {
     const [[x0, y0], [x1, y1]] = path.bounds(d)
     const scale = Math.min(
       2,

@@ -1,4 +1,4 @@
-export function drawPopup(svg: any, width: number, height: number) {
+export function drawPopup(svg: any) {
   svg.selectAll('.popup-object').remove()
   const foreignObject = svg
     .append('foreignObject')
