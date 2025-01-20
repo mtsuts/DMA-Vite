@@ -6,7 +6,14 @@ export function drawMap(params: any) {
   const width = window.innerWidth > 1440 ? 1500 : params.width
   const height = params.height
   const dma = params.dma
-  const marketsData = params.markets
+  const data = params.data
+  const marketsData = params.markets.map((d: any) => {
+    return {
+      ...d,
+      strategy: data.find((x: any) => d.Priority.includes(x.Priority))?.Label || ''
+    }
+  })
+  console.log(data)
 
   const scaleExtent = [1, 8] as [number, number]
 
@@ -24,12 +31,12 @@ export function drawMap(params: any) {
       .attr('x', 130)
       .attr('y', 520)
       .attr('width', '30%')
-      .attr('height', "40%")
+      .attr('height', '30%')
       .attr('class', 'tooltip-object')
       .style('overflow', 'visible')
-      .style('background-image', "url('./tooltip-background.png')") 
-      .style('background-size', '100%') 
-      .style('background-repeat', 'no-repeat') 
+      .style('background-image', "url('./tooltip-background.png')")
+      .style('background-size', '90%')
+      .style('background-repeat', 'no-repeat')
       .style('padding', '20px 0px 20px 5px')
 
     foreignObject
@@ -61,6 +68,10 @@ export function drawMap(params: any) {
       <div class='tooltip-row-title'> Priority Markets: </div>
       <div class='tooltip-row-value'>${data.Priority}</div>
       </div>
+         <div class='tooltip-row'> 
+      <div class='tooltip-row-title'> Strategy: </div>
+      <div class='tooltip-row-value'>${data.strategy}</div>
+      </div>
 
       </div>`)
   }
@@ -81,6 +92,9 @@ export function drawMap(params: any) {
     .domain(['Top Tier', 'Mid Tier', 'Non-Broadcast'])
     .range(['#6997ac', '#96bdcf', '#bbe0f3'])
 
+  let clickTimeout: any
+  const clickDelay = 300
+
   dmaPath
     .selectAll('.dma')
     .data(dma.features)
@@ -99,20 +113,24 @@ export function drawMap(params: any) {
     .attr('stroke-width', 0.5)
     .style('cursor', 'pointer')
     .style('opacity', 1)
-    .on('click', function (this: SVGPathElement, event: any, d: any) {
+    .on('click', function (this: SVGPathElement, _event: any, d: any) {
+      clearTimeout(clickTimeout) // Cancel any pending single-click action
       d3.select(this).style('filter', 'brightness(1.2)')
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
       if (foundMarket.length === 0) return
-      drawTooltip(foundMarket)
+      clickTimeout = setTimeout(() => {
+        drawTooltip(foundMarket)
+      }, clickDelay)
     })
-  
+
     .on('mouseleave', function (this: SVGPathElement) {
       d3.select(this).style('filter', 'none')
       svg.selectAll('.tooltip-object').remove()
     })
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
+      clearTimeout(clickTimeout)
       svg.selectAll('.tooltip-object').remove()
       const properties = d.properties
       const foundMarket =
@@ -125,7 +143,6 @@ export function drawMap(params: any) {
 
   // reset
   svg.on('click', () => {
-
     reset()
     svg.selectAll('.popup-object').remove()
   })
