@@ -59,14 +59,59 @@ body {
   color: #A2CDE3
 }
 
-.popup-container {
+.popup {
   font-family: 'Audiowide';
+  padding: 0px 40px;
+}
+
+.popup-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   width: 100%;
-  height: 100%
+  height: 100%;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: 700
+}
+
+.popup-title {
+  width: 350px;
+  text-align: center;
+  position: static;
+}
+
+.popup-bullets {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+.bullet {
+  text-align: center;
+}
+
+.bullet-title {
+  font-size:  20px;
+}
+
+.pie-chart-section {
+  margin-top: 20px;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.pie-bullets-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px
 }
 
 
