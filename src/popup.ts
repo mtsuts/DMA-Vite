@@ -14,7 +14,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
   const foreignObject = svg
     .append('foreignObject')
     .attr('x', 500)
-    .attr('y', 150)
+    .attr('y', 10)
     .attr('width', '60%')
     .attr('height', '100%')
     .attr('class', 'popup-object')
@@ -42,7 +42,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
       <div class='popup-header'> 
       <img src='./popup-play.svg' width=37 height=42 alt='play'/>
       <img src='./popup-title-left.svg' />
-      <div class='popup-title'> ${data.Market} </div>
+      <div class='popup-title'> ${data.Market || 'Market'} </div>
          <img src='./popup-title-right.svg' />
       </div> 
 
