@@ -180,4 +180,9 @@ export function drawMap(params: any) {
   function reset() {
     svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
   }
+
+  // handling popup close button click
+
+
+
 }
