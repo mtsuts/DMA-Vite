@@ -10,7 +10,8 @@ export function drawMap(params: any) {
   const marketsData = params.markets.map((d: any) => {
     return {
       ...d,
-      strategy: data.find((x: any) => d.Priority.includes(x.Priority))?.Label || ''
+      strategy:
+        data.find((x: any) => d.Priority.includes(x.Priority))?.Label || '',
     }
   })
   console.log(data)
@@ -136,9 +137,12 @@ export function drawMap(params: any) {
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
       if (foundMarket.length === 0) return
+      const foundData = data.find(
+        (market: any) => foundMarket.Priority === market.Priority
+      )
       event.stopPropagation()
       zooming(event, d)
-      drawPopup(svg)
+      drawPopup(svg, foundData)
     })
 
   // reset
