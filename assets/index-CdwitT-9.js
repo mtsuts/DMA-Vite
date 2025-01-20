@@ -64,11 +64,9 @@
           
               `).join("")}
 
-
-
-    
-          <img class='close-icon' src='./close-icon.svg' alt=''close-icon />
-
+          <button id='close_button'>
+          <img  class='close-icon' src='./close-icon.svg' alt=''close-icon />
+          </button>
       </div>`);const a=document.getElementById("pie-chart-container");if(a){const d=w6(r);a.appendChild(d)}function o(){console.log("test"),t1(".popup-object").style("display","none"),t.selectAll(".tooltip-object").remove()}function l(){t.transition().duration(1e3).call(n.transform,r2)}t1("#close_button").on("click",()=>{o(),l()})}function b6(t){const e=t.container,n=window.innerWidth>1440?1500:t.width,r=t.height,i=t.dma,a=t.data,o=t.markets.map(b=>{var A;return{...b,strategy:((A=a.find(N=>b.Priority.includes(N.Priority)))==null?void 0:A.Label)||""}}),l=[1,8],d=e.append("svg").attr("width",n).attr("height",r).attr("viewBox",`0 0 ${n}  ${r}`);function u(b){d.append("foreignObject").attr("x",130).attr("y",520).attr("width","30%").attr("height","30%").attr("class","tooltip-object").style("overflow","visible").style("background-image","url('./tooltip-background.png')").style("background-size","90%").style("background-repeat","no-repeat").style("padding","20px 0px 20px 5px").append("xhtml:div").style("position","absolute").style("background-color","transparent").style("color","#fff").style("font-size","13px").style("border-radius","10px").style("padding","10px").html(`
         <div class='tooltip'> 
 
