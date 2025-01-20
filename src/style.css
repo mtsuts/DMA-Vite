@@ -77,18 +77,23 @@ body {
   font-size: 25px;
   font-weight: 700;
   margin-top: 40px;
+  position: static;
+}
+
+.popup-logo {
+  text-align: end;
 }
 
 .close-icon {
   position: absolute;
   top: 0px;
-  right:3dvh;
+  right:30px;
+  cursor: pointer;
 }
 
 .popup-title {
   width: 350px;
   text-align: center;
-  position: static;
 }
 
 .popup-bullets {
@@ -110,7 +115,7 @@ body {
 }
 
 .total-share {
-  margin: 30px 0px;
+  margin: 30px 0px 10px 0px;
   text-align: center;
 }
 
@@ -143,8 +148,16 @@ body {
   font-family: 'Audiowide';
 }
 
+
+
 .bullet-detail-section {
   text-align: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.bullet-desc {
+  margin-top: 10px
 }
 
 .vector {

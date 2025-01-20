@@ -1,12 +1,55 @@
 import { drawPiechart } from './pieChart'
 import * as d3 from 'd3'
 
-export function drawPopup(svg: any, data: any, zoom:any) {
+export function drawPopup(svg: any, data: any, zoom: any) {
   const pieData = [
     { label: 'Rethink', value: Number(data.Rethink.replace('%', '')) },
     { label: 'Intercept', value: Number(data.Intercept.replace('%', '')) },
     { label: 'Nudge', value: Number(data.Nudge.replace('%', '')) },
     { label: 'Win', value: Number(data.Win.replace('%', '')) },
+  ]
+
+  const tableData = [
+    {
+      label: 'Rethink',
+      properties: [
+        'Linear TV',
+        'CTV',
+        'Radio',
+        'Sponshorships',
+        'OOH/DOOH',
+        'Influencers/Social Amplification',
+      ],
+    },
+    {
+      label: 'Intercept',
+      properties: [
+        'CTV',
+        'Audio',
+        'search non brand',
+        'SOCIAL',
+        'DIGITAL AUDIO',
+        'OOH/DOOH',
+      ],
+    },
+    {
+      label: 'Nudge',
+      properties: [
+        'search brand',
+        'DIGITAL VIDEO',
+        'social',
+        'DIGITAL DISPLAY',
+      ],
+    },
+    {
+      label: 'Win',
+      properties: [
+        'DIGITAL VIDEO',
+        'DIGITAL DISPLAY',
+        'Social',
+        'SEARCH NON bRAND',
+      ],
+    },
   ]
 
   // Remove existing popup elements
@@ -30,11 +73,14 @@ export function drawPopup(svg: any, data: any, zoom:any) {
     .style('background-size', '100% 100%')
     .style('background-repeat', 'no-repeat')
 
-  console.log(data.Market)
-
   // Add HTML content to the popup
   popupDiv.html(`
+
       <div class='popup'> 
+
+    <div id='close_button' class='close-icon'>
+    <img src='./close-icon.svg' alt=''close-icon />
+    </div>
         <div class='popup-header'> 
           <img src='./popup-play.svg' width=37 height=42 alt='play'/>
           <img src='./popup-title-left.svg' />
@@ -69,7 +115,7 @@ export function drawPopup(svg: any, data: any, zoom:any) {
   
         </div>
         <div class='total-share'> 
-        <div> ${data.Total.replace("$", '')} </div>
+        <div> ${data.Total.replace('$', '')} </div>
         <div> total market budget </div>
         </div>
     
@@ -96,23 +142,150 @@ export function drawPopup(svg: any, data: any, zoom:any) {
         </div>
 
         <img src='./pie-bottom-line.svg' width='560px' alt='line'/>
-        
-        ${pieData
-          .map(
-            (d: any) =>
-              `<div class='bullet-detail-section vector'> 
-                <img src='./vector.svg' width=300px' alt='vector'/>
-                <div class='vector-text'> ${d.label} </div>
-              </div>
-          
-              `
-          )
-          .join('')}
 
-          <button id='close_button'>
-          <img  class='close-icon' src='./close-icon.svg' alt=''close-icon />
-          </button>
-      </div>`)
+
+          <div class='bullet-detail-section vector'> 
+              <img src='./vector.svg' width=300px' alt='vector'/>
+              <div class='vector-text'> Rethink </div>
+            <div>
+            <div class='bullet-desc'>        
+             <div> ${data['Rethink-Linear TV']} </div>
+             <div> Linear TV </div>
+            <div> 
+
+            <div class='bullet-desc'>  
+             <div> ${data['Rethink-CTV']} </div>
+             <div> CTV </div>
+             </div>
+
+             <div class='bullet-desc'>  
+             <div> ${data['Rethink-Radio']} </div>
+             <div> Radio </div>
+             </div>
+
+            <div class='bullet-desc'>  
+             <div> ${data['Rethink-Sponsorships']} </div>
+             <div> Sponsorships </div>
+             </div>
+
+            <div class='bullet-desc'>  
+             <div> ${data['Rethink-OOH/DOOH']} </div>
+             <div> OOH/DOOH </div>
+             </div>
+
+              <div class='bullet-desc'>  
+             <div> ${data['Rethink-NFLUENCERS / SOCIAL AMPLIFICATION']} </div>
+             <div> OOH/DOOH </div>
+             </div>
+             <img  src='./detailed-line.svg'width=300px  alt='line' />
+             </div>
+
+
+            <div class='bullet-detail-section vector'> 
+            <img src='./vector.svg' width=300px' alt='vector'/>
+             <div class='vector-text'> Intercept </div>
+            <div>
+            <div class='bullet-desc'>        
+             <div> ${data['Intercept-CTV']} </div>
+             <div> CTV </div>
+            <div> 
+
+            <div class='bullet-desc'>  
+             <div> ${data['Intercept-Audio']} </div>
+             <div> Audio </div>
+             </div>
+
+             <div class='bullet-desc'>  
+             <div> ${data['Intercept-Search Non Brand']} </div>
+             <div> Search Non Brand </div>
+             </div>
+
+            <div class='bullet-desc'>  
+             <div> ${data['Intercept-Social']} </div>
+             <div> Social </div>
+             </div>
+
+            <div class='bullet-desc'>  
+             <div> ${data['Intercept-DIGITAL AUDIO']} </div>
+             <div> DIGITAL AUDIO </div>
+             </div>
+
+              <div class='bullet-desc'>  
+             <div> ${data['Intercept-OOH / DOOH']} </div>
+             <div> OOH/DOOH </div>
+             </div>
+             <img  src='./detailed-line.svg'width=300px  alt='line' />
+             </div>
+
+
+             <div class='bullet-detail-section vector'> 
+             <img src='./vector.svg' width=300px' alt='vector'/>
+             <div class='vector-text'> Nudge </div>
+           <div>
+           <div class='bullet-desc'>        
+            <div> ${data['Nudge-Search Brand']} </div>
+            <div> Search Brand </div>
+           <div> 
+
+           <div class='bullet-desc'>  
+            <div> ${data['Nudge-Digital Video']} </div>
+            <div> Digital Video </div>
+            </div>
+
+            <div class='bullet-desc'>  
+            <div> ${data['Nudge-Social']} </div>
+            <div> Social </div>
+            </div>
+
+           <div class='bullet-desc'>  
+            <div> ${data['Nudge-Digital Display']} </div>
+            <div> Digital Display </div>
+            </div>
+            <img  src='./detailed-line.svg'width=300px  alt='line' />
+            </div>
+
+
+
+            <div class='bullet-detail-section vector'> 
+            <img src='./vector.svg' width=300px' alt='vector'/>
+            <div class='vector-text'> Win </div>
+          <div>
+          <div class='bullet-desc'>        
+           <div> ${data['Win-Digital Video']} </div>
+           <div> Digital Video </div>
+          <div> 
+
+          <div class='bullet-desc'>  
+           <div> ${data['Win-Digital Display']} </div>
+           <div> Digital Display </div>
+           </div>
+
+           <div class='bullet-desc'>  
+           <div> ${data['Intercept-Search Non Brand']} </div>
+           <div> Search Non Brand </div>
+           </div>
+
+          <div class='bullet-desc'>  
+           <div> ${data['Win-Social']} </div>
+           <div> Social </div>
+           </div>
+
+          <div class='bullet-desc'>  
+           <div> ${data['Win-Search Non Brand']} </div>
+           <div> Search Non Brand </div>
+           </div>
+            <img  src='./detailed-line.svg'width=300px  alt='line' />
+           </div>
+
+           </div>
+
+            </div>            
+            </div>
+           </div>
+         
+          </div>
+            <img class='popup-logo' src='./logo.svg' alt='logo' />
+      `)
 
   // Append the pie chart to the container
   const pieChartContainer = document.getElementById('pie-chart-container')
@@ -122,7 +295,6 @@ export function drawPopup(svg: any, data: any, zoom:any) {
   }
 
   function clickOnClose() {
-    console.log('test')
     d3.select('.popup-object').style('display', 'none')
     svg.selectAll('.tooltip-object').remove()
   }

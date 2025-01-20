@@ -15,6 +15,7 @@ export function drawMap(params: any) {
     }
   })
 
+
   const scaleExtent = [1, 8] as [number, number]
 
   // append svg to container
