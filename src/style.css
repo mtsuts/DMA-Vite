@@ -8,7 +8,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: 'Audiowide';
+  src: url('./fonts/Audiowide-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 body {
+  /* font-family: 'Audiowide', sans-serif; */
   margin: 0px;
   background-image: url('/public/background.png');
   background-size: cover;
@@ -17,11 +26,11 @@ body {
   margin: 0
 }
 
-
 .map-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .title {
@@ -30,9 +39,12 @@ body {
   margin-top: 20px
 }
 
+
 .tooltip {
-  border-radius: 10px;
+  font-family: 'Audiowide';
+  text-transform: uppercase;
 }
+
 
 .tooltip-row {
   display: flex;
@@ -44,6 +56,7 @@ body {
 
 .tooltip-row-title {
   font-weight: 700;
+  color: #A2CDE3
 }
 
 a {
