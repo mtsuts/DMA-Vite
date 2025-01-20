@@ -28,7 +28,7 @@ export function drawMap(params: any) {
   function drawTooltip(data: any) {
     const foreignObject = svg
       .append('foreignObject')
-      .attr('x', 130)
+      .attr('x', 180)
       .attr('y', 520)
       .attr('width', '30%')
       .attr('height', '30%')
@@ -114,6 +114,7 @@ export function drawMap(params: any) {
     .style('cursor', 'pointer')
     .style('opacity', 1)
     .on('click', function (this: SVGPathElement, _event: any, d: any) {
+         svg.selectAll('.tooltip-object').remove()
       clearTimeout(clickTimeout) // Cancel any pending single-click action
       d3.select(this).style('filter', 'brightness(1.2)')
       const properties = d.properties
@@ -125,11 +126,12 @@ export function drawMap(params: any) {
       }, clickDelay)
     })
 
-    .on('mouseleave', function (this: SVGPathElement) {
-      d3.select(this).style('filter', 'none')
-      svg.selectAll('.tooltip-object').remove()
-    })
+    // .on('mouseleave', function (this: SVGPathElement) {
+    //   d3.select(this).style('filter', 'none')
+    //   svg.selectAll('.tooltip-object').remove()
+    // })
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
+      svg.selectAll('.tooltip-object').remove()
       clearTimeout(clickTimeout)
       svg.selectAll('.tooltip-object').remove()
       const properties = d.properties
@@ -139,6 +141,7 @@ export function drawMap(params: any) {
       const foundData = data.find(
         (market: any) => foundMarket.Priority === market.Priority
       )
+      drawTooltip(foundMarket)
       event.stopPropagation()
       zooming(event, d)
       drawPopup(svg, foundData, zoom)
@@ -148,11 +151,14 @@ export function drawMap(params: any) {
   svg.on('click', () => {
     reset()
     svg.selectAll('.popup-object').remove()
+    svg.selectAll('.tooltip-object').remove()
+    d3.select('.popup-object').style('display', 'none')
   })
 
   // Zoom event
   function zoomed(event: any) {
     g.attr('transform', event.transform).on('wheel', null)
+
   }
 
   const zoom = d3.zoom().scaleExtent(scaleExtent).on('zoom', zoomed)
@@ -180,9 +186,4 @@ export function drawMap(params: any) {
   function reset() {
     svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
   }
-
-  // handling popup close button click
-
-
-
 }

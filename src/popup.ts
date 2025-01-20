@@ -7,7 +7,6 @@ export function drawPopup(svg: any, data: any, zoom:any) {
     { label: 'Intercept', value: Number(data.Intercept.replace('%', '')) },
     { label: 'Nudge', value: Number(data.Nudge.replace('%', '')) },
     { label: 'Win', value: Number(data.Win.replace('%', '')) },
-    { label: 'Grow', value: Number(data.Grow.replace('%', '')) },
   ]
 
   // Remove existing popup elements
@@ -19,7 +18,7 @@ export function drawPopup(svg: any, data: any, zoom:any) {
     .append('div')
     .attr('class', 'popup-object')
     .style('position', 'absolute')
-    .style('left', window.innerWidth - 750 + 'px')
+    .style('left', window.innerWidth - 800 + 'px')
     .style('top', '40px')
     .style('width', window.innerWidth > 1440 ? '40%' : '50%')
     .style('height', '100%')
@@ -27,7 +26,7 @@ export function drawPopup(svg: any, data: any, zoom:any) {
     .style('overflow', 'auto')
     .style('z-index', 1000)
     .style('display', 'block')
-    .style('background-image', "url('./popup-background.png')")
+    .style('background-image', "url('./popup-backgrounds.png')")
     .style('background-size', '100% 100%')
     .style('background-repeat', 'no-repeat')
 
@@ -67,8 +66,13 @@ export function drawPopup(svg: any, data: any, zoom:any) {
             <div class='bullet-title'> ${data['Gateway Index'] || ''} </div>
             <div> Gateway Index </div>
           </div> 
+  
         </div>
-
+        <div class='total-share'> 
+        <div> ${data.Total.replace("$", '')} </div>
+        <div> total market budget </div>
+        </div>
+    
         <img src='./bullet-bottom-line.svg' width='560px' alt='line'/>
 
         <div class='pie-chart-section'> 
@@ -99,11 +103,14 @@ export function drawPopup(svg: any, data: any, zoom:any) {
               `<div class='bullet-detail-section vector'> 
                 <img src='./vector.svg' width=300px' alt='vector'/>
                 <div class='vector-text'> ${d.label} </div>
-              </div>`
+              </div>
+          
+              `
           )
           .join('')}
+
           <button id='close_button'>
-          <img class='close-icon' src='./close-icon.svg' alt=''close-icon />
+          <img  class='close-icon' src='./close-icon.svg' alt=''close-icon />
           </button>
       </div>`)
 
@@ -117,6 +124,7 @@ export function drawPopup(svg: any, data: any, zoom:any) {
   function clickOnClose() {
     console.log('test')
     d3.select('.popup-object').style('display', 'none')
+    svg.selectAll('.tooltip-object').remove()
   }
 
   function reset() {
