@@ -14,7 +14,6 @@ export function drawMap(params: any) {
         data.find((x: any) => d.Priority.includes(x.Priority))?.Label || '',
     }
   })
-  console.log(data)
 
   const scaleExtent = [1, 8] as [number, number]
 
@@ -142,7 +141,7 @@ export function drawMap(params: any) {
       )
       event.stopPropagation()
       zooming(event, d)
-      drawPopup(svg, foundData)
+      drawPopup(svg, foundData, zoom)
     })
 
   // reset

@@ -1,5 +1,15 @@
-export function drawPopup(svg: any, data: any) {
-  console.log(data)
+import { drawPiechart } from './pieChart'
+
+export function drawPopup(svg: any, data: any, zoom: any) {
+  const pieData = [
+    { label: 'Rethink', value: Number(data.Rethink.replace('%', '')) },
+    { label: 'Intercept', value: Number(data.Intercept.replace('%', '')) },
+    { label: 'Nudge', value: Number(data.Nudge.replace('%', '')) },
+    { label: 'Win', value: Number(data.Win.replace('%', '')) },
+    { label: 'Grow', value: Number(data.Grow.replace('%', '')) },
+  ]
+
+
   svg.selectAll('.popup-object').remove()
   const foreignObject = svg
     .append('foreignObject')
@@ -25,7 +35,7 @@ export function drawPopup(svg: any, data: any) {
     .style('align-items', 'center')
     .style('justify-content', 'center')
     .style('width', '100%')
-    .style('overflow', 'auto')  
+    .style('overflow', 'auto')
     .style('height', '600px').html(`
       <div class='popup'> 
 
@@ -61,19 +71,39 @@ export function drawPopup(svg: any, data: any) {
          <div> Homes <br/> Passed % </div>
           </div> 
       </div>
-      <img src='./bullet-bottom-line.svg' width='500px' alt='line'/>
+
+      <img src='./bullet-bottom-line.svg' width='700px' alt='line'/>
 
       <div class='pie-chart-section'> 
       <img src='./left-line.svg' height='200px' alt='left-line'/>
-      <div> pie chart  </div>
-       <div class='pie-bullets'>
-       <div class='pie-bullets-group'> 
-        <img src='./bullets/rethink.svg' alt='rething-rect'/>
-        <div> Rethink </div>
-       </div> 
+
+       <div id="pie-chart-container"></div>
+
+       <div class='pie-bullet'>
+       ${pieData
+         .map((d: any) => {
+           return `<div class='pie-bullets-group'> 
+        <img src='./bullets/${d.label.toLowerCase()}.svg' alt='rect'/>
+        <div> ${d.label} </div>
+       </div>`
+         })
+         .join('')}
        </div>
+
         <img src='./right-line.svg' height='200px' alt='right-line'/>
       </div>
 
+     <img src='./pie-bottom-line.svg' width='700px' alt='line'/>
+
+
+
       </div>`)
+
+  // Append the pie chart to the container
+  const pieChartContainer = document.getElementById('pie-chart-container')
+  if (pieChartContainer) {
+    const pieChart = drawPiechart(pieData)
+    pieChartContainer.appendChild(pieChart)
+  }
 }
+    //  <img src='./vector.svg' width=300px' alt='vector'/>
