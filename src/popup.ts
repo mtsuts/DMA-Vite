@@ -8,7 +8,7 @@ export function drawPopup(svg: any) {
     .attr('height', "40%")
     .attr('class', 'popup-object')
     .style('overflow', 'visible')
-    .style('background-image', "url('/public/popup-background.png')") 
+    .style('background-image', "url('./popup-background.png')") 
     .style('background-size', '100% 100%') 
     .style('background-repeat', 'no-repeat') 
     .style('padding', '40px')

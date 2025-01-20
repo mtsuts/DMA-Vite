@@ -4,7 +4,9 @@ import * as d3 from 'd3'
 import { drawMap } from './map'
 import dmajson from './data/nielsentopo.json'
 
-d3.csv('/markets.csv').then((marketsData) => {
+
+
+d3.csv('./markets.csv').then((marketsData) => {
   const container = d3.select('.map-container')
   const dma = topojson.feature(
     dmajson as any,
