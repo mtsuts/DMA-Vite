@@ -13,7 +13,6 @@ Promise.all([d3.csv('./markets.csv'), d3.csv('./mainData.csv')]).then(
     )
     const markets = marketsData.filter((d: any) => d !== 'columns')
     const data = mainData.filter((d: any) => d !== 'columns')
-console.log(window.innerWidth)
     drawMap({
       container,
       width: window.innerWidth,
