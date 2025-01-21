@@ -66,7 +66,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
     .style('width', window.innerWidth / 2)
     .style('height', '100%')
     .style('height', '600px')
-    .style('overflow', 'auto')
+    .style('overflow', 'hidden')
     .style('z-index', 1000)
     .style('display', 'block')
     .style('background-image', "url('./popup.svg')")
@@ -77,13 +77,14 @@ export function drawPopup(svg: any, data: any, zoom: any) {
   popupDiv.html(`
 
     <div class='popup'> 
+
     <div id='close_button' class='close-icon'>
     <img src='./close-icon.svg' alt=''close-icon />
     </div>
-
-          <div class='popup-logo'>
-             <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
-             </div>
+      <div class='popup-logo'>
+      <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
+        </div>
+    
 
         <div class='popup-header'> 
           <img src='./popup-play.svg' width=37 height=42 alt='play'/>
@@ -92,8 +93,9 @@ export function drawPopup(svg: any, data: any, zoom: any) {
           <img src='./popup-title-right.svg' />
         </div> 
 
-        <div class='popup-bullets'> 
+        <div class='popup-content'>
 
+        <div class='popup-bullets'> 
           <div class='bullet'>
             <div class='bullet-title'> ${
               data['% Homes Passed (pct availability)'] || ''
@@ -176,6 +178,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
                `
                })
                .join('')}   
+               </div>
           </div>
       `)
 
