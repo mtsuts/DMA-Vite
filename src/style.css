@@ -22,7 +22,7 @@ body {
   background-image: url('/public/background.png');
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
+  height: 100%;
   margin: 0
 }
 
@@ -152,20 +152,20 @@ body {
 .bullet-detail-section {
   text-align: center;
   margin-bottom: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .bullet-desc {
   text-align: start;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .bullet-label {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .bullet-value {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .bullet-desc-object {
@@ -181,7 +181,7 @@ body {
 .vector-text {
   position: absolute;
   top: 18px;
-  left: 150px;
+  left: 170px;
 }
 
 a {

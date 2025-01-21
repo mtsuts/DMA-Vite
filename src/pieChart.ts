@@ -54,4 +54,5 @@ export function drawPiechart(
     .text((d) => (d.data.value === 0 ? '' : d.data.value + '%'))
 
   return svg.node() as SVGSVGElement
+  
 }

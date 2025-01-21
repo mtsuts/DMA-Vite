@@ -3,7 +3,7 @@ import { drawPopup } from './popup'
 
 export function drawMap(params: any) {
   const container = params.container
-  const width = window.innerWidth > 1440 ? 1500 : params.width
+  const width = params.width
   const height = params.height
   const dma = params.dma
   const data = params.data
@@ -17,12 +17,29 @@ export function drawMap(params: any) {
 
   const scaleExtent = [1, 8] as [number, number]
 
+  // append logo
+  d3
+    .select('body')
+    .append('div')
+    .attr('class', 'logo-object')
+    .style('position', 'absolute')
+    .style('left', '20px')
+    .style('top', '30px')
+    .style('width', '200px')
+    .style('height', '40px')
+    .style('padding', '5px')
+    .style('text-align', 'center')
+    .style('border-radius', '6px')
+    .style('background-color', 'rgba(27, 62, 95, 0.5)') 
+    .html("<img src='./logo.svg' alt='logo'/>")
+
   // append svg to container
   const svg = container
     .append('svg')
     .attr('width', width)
     .attr('height', height)
     .attr('viewBox', `0 0 ${width}  ${height}`)
+
 
   // tooltip
   function drawTooltip(data: any) {
@@ -44,7 +61,7 @@ export function drawMap(params: any) {
       .style('position', 'absolute')
       .style('background-color', 'transparent')
       .style('color', '#fff')
-      .style('font-size', '13px')
+      .style('font-size', window.innerWidth > 1440 ? '18px' : '13px')
       .style('border-radius', '10px')
       .style('padding', '10px').html(`
         <div class='tooltip'> 
@@ -80,7 +97,7 @@ export function drawMap(params: any) {
 
   const projection = d3
     .geoAlbersUsa()
-    .scale(window.innerWidth > 1440 ? 1500 : 1400)
+    .scale(window.innerWidth)
     .translate([width / 2, height / 2])
 
   // path generator
@@ -176,7 +193,7 @@ export function drawMap(params: any) {
       )
   }
 
-  svg.call(zoom)
+  svg.call(zoom).on("wheel.zoom", null)
 
   function reset() {
     svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
