@@ -41,6 +41,7 @@ export function drawMap(params: any) {
 
   // tooltip
   function drawTooltip(data: any) {
+    svg.selectAll('.tooltip-object').remove()
     const foreignObject = svg
       .append('foreignObject')
       .attr('x', '5%')
@@ -145,7 +146,7 @@ export function drawMap(params: any) {
     .on('mouseover', function (this: SVGPathElement, _event: any, d: any) {
       if(isDblClickActive) return;
       if (isTouchDevice) return; 
-      svg.selectAll('.tooltip-object').remove()
+      // svg.selectAll('.tooltip-object').remove()
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
