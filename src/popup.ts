@@ -62,7 +62,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
     .attr('class', 'popup-object')
     .style('position', 'absolute')
     .style('left', window.innerWidth - 800 + 'px')
-    .style('top', '40px')
+    .style('top', '60px')
     .style('width', window.innerWidth / 2)
     .style('height', '100%')
     .style('height', '600px')
