@@ -63,7 +63,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
     .style('position', 'absolute')
     .style('left', window.innerWidth - 800 + 'px')
     .style('top', '40px')
-    .style('width', window.innerWidth > 1440 ? '40%' : '50%')
+    .style('width', window.innerWidth / 2)
     .style('height', '100%')
     .style('height', '600px')
     .style('overflow', 'auto')
@@ -122,7 +122,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
         </div>
         
     
-        <img src='./bullet-bottom-line.svg' width='560px' alt='line'/>
+        <img src='./bullet-bottom-line.svg' class='lines'  alt='line'/>
 
         <div class='pie-chart-section'> 
           <img src='./left-line.svg' height='200px' alt='left-line'/>
@@ -144,7 +144,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
           <img src='./right-line.svg' height='200px' alt='right-line'/>
         </div>
 
-        <img src='./pie-bottom-line.svg' width='560px' alt='line'/>
+        <img src='./pie-bottom-line.svg' class='lines'  alt='line'/>
   
              ${tableData
                .map((x: any) => {
@@ -157,8 +157,12 @@ export function drawPopup(svg: any, data: any, zoom: any) {
                    ${x.properties
                      .map((a: any) => {
                        return `<div class='bullet-desc'>  
-                       <div class='bullet-label'> ${data[`${x.label}-${a}`]} </div>
-                       <div class='bullet-value'> ${ data[`${x.label}-${a}`] ? a : ''} </div>
+                       <div class='bullet-label'> ${
+                         data[`${x.label}-${a}`]
+                       } </div>
+                       <div class='bullet-value'> ${
+                         data[`${x.label}-${a}`] ? a : ''
+                       } </div>
                        </div>`
                      })
                      .join('')}   

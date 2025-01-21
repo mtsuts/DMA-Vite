@@ -80,6 +80,8 @@ body {
   font-size: 25px;
   font-weight: 700;
   margin-top: 40px;
+  /* position: sticky;
+  top: 0 */
 }
 
 .popup-logo {
@@ -106,7 +108,7 @@ body {
   gap: 40px;
   margin-top: 30px;
   font-size: 13px;
-  width: 560px;
+  width: 100%;
 }
 
 .bullet {
@@ -122,13 +124,17 @@ body {
   text-align: center;
 }
 
+.lines {
+  max-width: 560px
+}
+
 .pie-chart-section {
   margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 40px;
-  width: 560px;
+  width: 100%;
 }
 
 .pie-bullet {
