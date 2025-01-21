@@ -9,6 +9,10 @@
     <img src='./close-icon.svg' alt=''close-icon />
     </div>
 
+                 <div class='popup-logo'>
+             <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
+             </div>
+
         <div class='popup-header'> 
           <img src='./popup-play.svg' width=37 height=42 alt='play'/>
           <img src='./popup-title-left.svg' />
@@ -79,10 +83,6 @@
                     <img  src='./detailed-line.svg'width=300px  alt='line' />   
                </div>
                `).join("")}   
-
-             <div class='popup-logo'>
-             <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
-             </div>
           </div>
       `);const o=document.getElementById("pie-chart-container");if(o){const s=w6(r);o.appendChild(s)}function l(){t1(".popup-object").style("display","none"),t.selectAll(".tooltip-object").remove()}function d(){t.transition().duration(1e3).call(n.transform,r2)}t1("#close_button").on("click",()=>{l(),d()})}function b6(t){const e=t.container,n=t.width,r=t.height,i=t.dma,a=t.data,o=t.markets.map(b=>{var A;return{...b,strategy:((A=a.find(N=>b.Priority.includes(N.Priority)))==null?void 0:A.Label)||""}}),l=[1,8];t1("body").append("div").attr("class","logo-object").style("position","absolute").style("left","20px").style("top","30px").style("width","200px").style("height","40px").style("padding","5px").style("text-align","center").style("border-radius","6px").style("background-color","rgba(27, 62, 95, 0.5)").html("<img src='./logo.svg' alt='logo'/>");const d=e.append("svg").attr("width",n).attr("height",r).attr("viewBox",`0 0 ${n}  ${r}`);function s(b){d.append("foreignObject").attr("x","5%").attr("y","75%").attr("width",window.innerWidth>1800?"600px":"480px").attr("height",window.innerWidth>1800?"420px":"300px").attr("class","tooltip-object").style("overflow","visible").style("background-image","url('./tooltip-background.png')").style("background-size","90%").style("background-repeat","no-repeat").style("padding","20px 0px 20px 5px").append("xhtml:div").style("position","absolute").style("background-color","transparent").style("color","#fff").style("font-size",window.innerWidth>1800?"19px":"15px").style("border-radius","10px").style("padding","10px").html(`
         <div class='tooltip'> 
