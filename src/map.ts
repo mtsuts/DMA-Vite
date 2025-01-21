@@ -22,7 +22,7 @@ export function drawMap(params: any) {
     .append('div')
     .attr('class', 'logo-object')
     .style('position', 'absolute')
-    .style('left', '20px')
+    .style('left', '40px')
     .style('top', '30px')
     .style('width', '200px')
     .style('height', '40px')
@@ -44,8 +44,8 @@ export function drawMap(params: any) {
     svg.selectAll('.tooltip-object').remove()
     const foreignObject = svg
       .append('foreignObject')
-      .attr('x', '5%')
-      .attr('y', '75%')
+      .attr('x', '3%')
+      .attr('y', '72%')
       .attr('width', window.innerWidth > 1800 ? '600px' : '480px')
       .attr('height', window.innerWidth > 1800 ? '420px' : '300px')
       .attr('class', 'tooltip-object')
@@ -160,22 +160,21 @@ export function drawMap(params: any) {
     .on('mouseleave', function (this: SVGPathElement, _event: any, _d: any) {
       if (isTouchDevice) return
       if (isDblClickActive) return
-      // svg.selectAll('.tooltip-object').remove()
       clearTimeout(clickTimeout)
       svg.selectAll('.dma').style('filter', 'none')
     })
 
-    // .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
-    //   event.preventDefault()
-    //   const properties = d.properties
-    //   const foundMarket =
-    //     marketsData.find((x: any) => x.DMA === properties.dma1) || []
-    //   if (foundMarket.length === 0) return
-    //   drawTooltip(foundMarket)
-    // })
-    // .on('touchend', function (this: SVGPathElement, _event: any, _d: any) {
-    //   svg.selectAll('.tooltip-object').remove()
-    // })
+    .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
+      event.preventDefault()
+      const properties = d.properties
+      const foundMarket =
+        marketsData.find((x: any) => x.DMA === properties.dma1) || []
+      if (foundMarket.length === 0) return
+      drawTooltip(foundMarket)
+    })
+    .on('touchend', function (this: SVGPathElement, _event: any, _d: any) {
+      svg.selectAll('.tooltip-object').remove()
+    })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
       isDblClickActive = true
