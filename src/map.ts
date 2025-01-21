@@ -15,7 +15,6 @@ export function drawMap(params: any) {
     }
   })
 
-
   const scaleExtent = [1, 8] as [number, number]
 
   // append svg to container
@@ -29,7 +28,7 @@ export function drawMap(params: any) {
   function drawTooltip(data: any) {
     const foreignObject = svg
       .append('foreignObject')
-      .attr('x', 180)
+      .attr('x', 160)
       .attr('y', 520)
       .attr('width', '30%')
       .attr('height', '30%')
@@ -127,10 +126,6 @@ export function drawMap(params: any) {
       }, clickDelay)
     })
 
-    // .on('mouseleave', function (this: SVGPathElement) {
-    //   d3.select(this).style('filter', 'none')
-    //   svg.selectAll('.tooltip-object').remove()
-    // })
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
       svg.selectAll('.tooltip-object').remove()
       clearTimeout(clickTimeout)
@@ -159,7 +154,6 @@ export function drawMap(params: any) {
   // Zoom event
   function zoomed(event: any) {
     g.attr('transform', event.transform).on('wheel', null)
-
   }
 
   const zoom = d3.zoom().scaleExtent(scaleExtent).on('zoom', zoomed)

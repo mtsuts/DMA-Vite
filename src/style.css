@@ -82,6 +82,7 @@ body {
 
 .popup-logo {
   text-align: end;
+  margin-bottom: 40px;
 }
 
 .close-icon {
@@ -148,8 +149,6 @@ body {
   font-family: 'Audiowide';
 }
 
-
-
 .bullet-detail-section {
   text-align: center;
   margin-bottom: 20px;
@@ -157,7 +156,14 @@ body {
 }
 
 .bullet-desc {
-  margin-top: 10px
+  /* margin-top: 10px; */
+  text-align: start;
+}
+
+.bullet-desc-object {
+  width: 270px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .vector {
@@ -166,8 +172,8 @@ body {
 
 .vector-text {
   position: absolute;
-  top: 15px;
-  left: 170px;
+  top: 18px;
+  left: 150px;
 }
 
 a {

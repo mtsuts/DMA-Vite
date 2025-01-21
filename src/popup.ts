@@ -16,9 +16,9 @@ export function drawPopup(svg: any, data: any, zoom: any) {
         'Linear TV',
         'CTV',
         'Radio',
-        'Sponshorships',
+        'Sponsorships',
         'OOH/DOOH',
-        'Influencers/Social Amplification',
+        'INFLUENCERS / SOCIAL AMPLIFICATION',
       ],
     },
     {
@@ -26,28 +26,28 @@ export function drawPopup(svg: any, data: any, zoom: any) {
       properties: [
         'CTV',
         'Audio',
-        'search non brand',
-        'SOCIAL',
+        'Search Non Brand',
+        'Social',
         'DIGITAL AUDIO',
-        'OOH/DOOH',
+        'OOH / DOOH',
       ],
     },
     {
       label: 'Nudge',
       properties: [
-        'search brand',
-        'DIGITAL VIDEO',
-        'social',
-        'DIGITAL DISPLAY',
+        'Search Brand',
+        'Digital Video',
+        'Social',
+        'Digital Display',
       ],
     },
     {
       label: 'Win',
       properties: [
-        'DIGITAL VIDEO',
-        'DIGITAL DISPLAY',
+        'Digital Video',
+        'Digital Display',
         'Social',
-        'SEARCH NON bRAND',
+        'Search Non Brand',
       ],
     },
   ]
@@ -76,11 +76,11 @@ export function drawPopup(svg: any, data: any, zoom: any) {
   // Add HTML content to the popup
   popupDiv.html(`
 
-      <div class='popup'> 
-
+    <div class='popup'> 
     <div id='close_button' class='close-icon'>
     <img src='./close-icon.svg' alt=''close-icon />
     </div>
+
         <div class='popup-header'> 
           <img src='./popup-play.svg' width=37 height=42 alt='play'/>
           <img src='./popup-title-left.svg' />
@@ -89,6 +89,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
         </div> 
 
         <div class='popup-bullets'> 
+
           <div class='bullet'>
             <div class='bullet-title'> ${
               data['% Homes Passed (pct availability)'] || ''
@@ -112,12 +113,14 @@ export function drawPopup(svg: any, data: any, zoom: any) {
             <div class='bullet-title'> ${data['Gateway Index'] || ''} </div>
             <div> Gateway Index </div>
           </div> 
+
   
         </div>
         <div class='total-share'> 
         <div> ${data.Total.replace('$', '')} </div>
         <div> total market budget </div>
         </div>
+        
     
         <img src='./bullet-bottom-line.svg' width='560px' alt='line'/>
 
@@ -142,149 +145,33 @@ export function drawPopup(svg: any, data: any, zoom: any) {
         </div>
 
         <img src='./pie-bottom-line.svg' width='560px' alt='line'/>
+  
+             ${tableData
+               .map((x: any) => {
+                 return `<div class='bullet-detail-section vector'>
+                  <img src='./vector.svg' width=300px' alt='vector'/>
+                  <div class='vector-text'> ${x.label} </div>
 
+                   <div class='bullet-desc-object'>
+                  
+                   ${x.properties
+                     .map((a: any) => {
+                       return `<div class='bullet-desc'>  
+                       <div> ${data[`${x.label}-${a}`]} </div>
+                        <div> ${a} </div>  </div>`
+                     })
+                     .join('')}   
+                   </div>
+                    <img  src='./detailed-line.svg'width=300px  alt='line' />   
+               </div>
+               `
+               })
+               .join('')}   
 
-          <div class='bullet-detail-section vector'> 
-              <img src='./vector.svg' width=300px' alt='vector'/>
-              <div class='vector-text'> Rethink </div>
-            <div>
-            <div class='bullet-desc'>        
-             <div> ${data['Rethink-Linear TV']} </div>
-             <div> Linear TV </div>
-            <div> 
-
-            <div class='bullet-desc'>  
-             <div> ${data['Rethink-CTV']} </div>
-             <div> CTV </div>
+             <div class='popup-logo'>
+             <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
              </div>
-
-             <div class='bullet-desc'>  
-             <div> ${data['Rethink-Radio']} </div>
-             <div> Radio </div>
-             </div>
-
-            <div class='bullet-desc'>  
-             <div> ${data['Rethink-Sponsorships']} </div>
-             <div> Sponsorships </div>
-             </div>
-
-            <div class='bullet-desc'>  
-             <div> ${data['Rethink-OOH/DOOH']} </div>
-             <div> OOH/DOOH </div>
-             </div>
-
-              <div class='bullet-desc'>  
-             <div> ${data['Rethink-NFLUENCERS / SOCIAL AMPLIFICATION']} </div>
-             <div> OOH/DOOH </div>
-             </div>
-             <img  src='./detailed-line.svg'width=300px  alt='line' />
-             </div>
-
-
-            <div class='bullet-detail-section vector'> 
-            <img src='./vector.svg' width=300px' alt='vector'/>
-             <div class='vector-text'> Intercept </div>
-            <div>
-            <div class='bullet-desc'>        
-             <div> ${data['Intercept-CTV']} </div>
-             <div> CTV </div>
-            <div> 
-
-            <div class='bullet-desc'>  
-             <div> ${data['Intercept-Audio']} </div>
-             <div> Audio </div>
-             </div>
-
-             <div class='bullet-desc'>  
-             <div> ${data['Intercept-Search Non Brand']} </div>
-             <div> Search Non Brand </div>
-             </div>
-
-            <div class='bullet-desc'>  
-             <div> ${data['Intercept-Social']} </div>
-             <div> Social </div>
-             </div>
-
-            <div class='bullet-desc'>  
-             <div> ${data['Intercept-DIGITAL AUDIO']} </div>
-             <div> DIGITAL AUDIO </div>
-             </div>
-
-              <div class='bullet-desc'>  
-             <div> ${data['Intercept-OOH / DOOH']} </div>
-             <div> OOH/DOOH </div>
-             </div>
-             <img  src='./detailed-line.svg'width=300px  alt='line' />
-             </div>
-
-
-             <div class='bullet-detail-section vector'> 
-             <img src='./vector.svg' width=300px' alt='vector'/>
-             <div class='vector-text'> Nudge </div>
-           <div>
-           <div class='bullet-desc'>        
-            <div> ${data['Nudge-Search Brand']} </div>
-            <div> Search Brand </div>
-           <div> 
-
-           <div class='bullet-desc'>  
-            <div> ${data['Nudge-Digital Video']} </div>
-            <div> Digital Video </div>
-            </div>
-
-            <div class='bullet-desc'>  
-            <div> ${data['Nudge-Social']} </div>
-            <div> Social </div>
-            </div>
-
-           <div class='bullet-desc'>  
-            <div> ${data['Nudge-Digital Display']} </div>
-            <div> Digital Display </div>
-            </div>
-            <img  src='./detailed-line.svg'width=300px  alt='line' />
-            </div>
-
-
-
-            <div class='bullet-detail-section vector'> 
-            <img src='./vector.svg' width=300px' alt='vector'/>
-            <div class='vector-text'> Win </div>
-          <div>
-          <div class='bullet-desc'>        
-           <div> ${data['Win-Digital Video']} </div>
-           <div> Digital Video </div>
-          <div> 
-
-          <div class='bullet-desc'>  
-           <div> ${data['Win-Digital Display']} </div>
-           <div> Digital Display </div>
-           </div>
-
-           <div class='bullet-desc'>  
-           <div> ${data['Intercept-Search Non Brand']} </div>
-           <div> Search Non Brand </div>
-           </div>
-
-          <div class='bullet-desc'>  
-           <div> ${data['Win-Social']} </div>
-           <div> Social </div>
-           </div>
-
-          <div class='bullet-desc'>  
-           <div> ${data['Win-Search Non Brand']} </div>
-           <div> Search Non Brand </div>
-           </div>
-            <img  src='./detailed-line.svg'width=300px  alt='line' />
-           </div>
-
-           </div>
-
-            </div>            
-            </div>
-           </div>
-         
           </div>
-            <img class='popup-logo' src='./logo.svg' alt='logo' />
       `)
 
   // Append the pie chart to the container
