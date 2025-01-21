@@ -21,7 +21,7 @@ body {
   margin: 0;
   background-image: url('/public/background.png');
   background-size: 100% 100%;
-  background-position: center center; 
+  background-position: center center;
   background-repeat: no-repeat;
   min-height: 100vh;
   height: 100%;
@@ -89,6 +89,13 @@ body {
 .popup-logo {
   text-align: end;
   margin-bottom: 40px;
+  position: fixed;
+  bottom: 130px;
+  right: 110px;
+  padding: 14px;
+  display:flex;
+  align-items: center;
+  background-color: rgba(27, 62, 95);
 }
 
 .close-icon {

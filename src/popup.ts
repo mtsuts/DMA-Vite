@@ -81,6 +81,10 @@ export function drawPopup(svg: any, data: any, zoom: any) {
     <img src='./close-icon.svg' alt=''close-icon />
     </div>
 
+                 <div class='popup-logo'>
+             <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
+             </div>
+
         <div class='popup-header'> 
           <img src='./popup-play.svg' width=37 height=42 alt='play'/>
           <img src='./popup-title-left.svg' />
@@ -172,10 +176,6 @@ export function drawPopup(svg: any, data: any, zoom: any) {
                `
                })
                .join('')}   
-
-             <div class='popup-logo'>
-             <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
-             </div>
           </div>
       `)
 
