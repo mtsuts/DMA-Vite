@@ -157,8 +157,9 @@ export function drawPopup(svg: any, data: any, zoom: any) {
                    ${x.properties
                      .map((a: any) => {
                        return `<div class='bullet-desc'>  
-                       <div> ${data[`${x.label}-${a}`]} </div>
-                        <div> ${a} </div>  </div>`
+                       <div class='bullet-label'> ${data[`${x.label}-${a}`]} </div>
+                       <div class='bullet-value'> ${ data[`${x.label}-${a}`] ? a : ''} </div>
+                       </div>`
                      })
                      .join('')}   
                    </div>

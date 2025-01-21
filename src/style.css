@@ -156,8 +156,16 @@ body {
 }
 
 .bullet-desc {
-  /* margin-top: 10px; */
   text-align: start;
+  margin-top: 20px;
+}
+
+.bullet-label {
+  font-size: 20px;
+}
+
+.bullet-value {
+  font-size: 13px;
 }
 
 .bullet-desc-object {
