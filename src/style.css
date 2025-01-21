@@ -67,7 +67,7 @@ body {
   font-family: 'Audiowide';
   padding: 0px 80px;
   text-transform: uppercase;
-  color: #ffffff
+  color: #ffffff;
 }
 
 .popup-header {
@@ -80,8 +80,10 @@ body {
   font-size: 25px;
   font-weight: 700;
   margin-top: 40px;
-  /* position: sticky;
-  top: 0 */
+  position: sticky;
+  top: 10px;
+  background-color: rgba(27, 62, 95);
+  z-index: 1000;
 }
 
 .popup-logo {
@@ -90,9 +92,9 @@ body {
 }
 
 .close-icon {
-  position: absolute;
-  top: 0px;
-  right:30px;
+  position: fixed;
+  top: 80px;
+  right: 120px;
   cursor: pointer;
 }
 

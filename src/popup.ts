@@ -69,7 +69,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
     .style('overflow', 'auto')
     .style('z-index', 1000)
     .style('display', 'block')
-    .style('background-image', "url('./popup-backgrounds.png')")
+    .style('background-image', "url('./popup.svg')")
     .style('background-size', '100% 100%')
     .style('background-repeat', 'no-repeat')
 
