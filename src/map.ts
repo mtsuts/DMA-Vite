@@ -226,7 +226,7 @@ export function drawMap(params: any) {
       )
   }
 
-  svg.call(zoom).on('wheel.zoom', null)
+  svg.call(zoom)
 
   function reset() {
     svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)

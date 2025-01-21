@@ -81,7 +81,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
     <img src='./close-icon.svg' alt=''close-icon />
     </div>
 
-                 <div class='popup-logo'>
+          <div class='popup-logo'>
              <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
              </div>
 
