@@ -221,8 +221,8 @@ export function drawMap(params: any) {
       2,
       2 / Math.max((x1 - x0) / width, (y1 - y0) / height)
     )
-    const translateX = width / 2 - (scale * (x0 + x1)) / 2
-    const translateY = height / 2 - (scale * (y0 + y1)) / 2
+    const translateX = width / 2 - (scale * (x0 + x1)) / 1.7
+    const translateY = height / 2 - (scale * (y0 + y1)) / 1.7
 
     svg
       .transition()
