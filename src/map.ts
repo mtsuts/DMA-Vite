@@ -110,8 +110,8 @@ export function drawMap(params: any) {
 
   let clickTimeout: any
   const clickDelay = 300
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  let isDblClickActive = false; 
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+  let isDblClickActive = false
 
   dmaPath
     .selectAll('.dma')
@@ -144,9 +144,8 @@ export function drawMap(params: any) {
     })
 
     .on('mouseover', function (this: SVGPathElement, _event: any, d: any) {
-      if(isDblClickActive) return;
-      if (isTouchDevice) return; 
-      // svg.selectAll('.tooltip-object').remove()
+      if (isDblClickActive) return
+      if (isTouchDevice) return
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
@@ -154,25 +153,28 @@ export function drawMap(params: any) {
       clickTimeout = setTimeout(() => {
         drawTooltip(foundMarket)
       }, clickDelay)
+
+      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
     })
 
     .on('mouseleave', function (this: SVGPathElement, _event: any, _d: any) {
-      if (isTouchDevice) return; 
+      if (isTouchDevice) return
+      if (isDblClickActive) return
       // svg.selectAll('.tooltip-object').remove()
-      clearTimeout(clickTimeout);
+      clearTimeout(clickTimeout)
+      svg.selectAll('.dma').style('filter', 'none')
     })
 
     // .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
-    //   event.preventDefault(); 
-    //   svg.selectAll('.tooltip-object').remove();
-    //   const properties = d.properties;
+    //   event.preventDefault()
+    //   const properties = d.properties
     //   const foundMarket =
-    //     marketsData.find((x: any) => x.DMA === properties.dma1) || [];
-    //   if (foundMarket.length === 0) return;
-    //   drawTooltip(foundMarket); // Show tooltip immediately for touch
+    //     marketsData.find((x: any) => x.DMA === properties.dma1) || []
+    //   if (foundMarket.length === 0) return
+    //   drawTooltip(foundMarket)
     // })
     // .on('touchend', function (this: SVGPathElement, _event: any, _d: any) {
-    //   svg.selectAll('.tooltip-object').remove(); // Hide tooltip on touch end
+    //   svg.selectAll('.tooltip-object').remove()
     // })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
@@ -192,6 +194,11 @@ export function drawMap(params: any) {
       zooming(event, d)
       drawPopup(svg, foundData, zoom)
     })
+
+  g.on('mouseleave', () => {
+    if (isDblClickActive) return
+    svg.selectAll('.tooltip-object').remove()
+  })
 
   // reset
   svg.on('click', () => {
