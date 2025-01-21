@@ -132,6 +132,8 @@ export function drawMap(params: any) {
     .style('cursor', 'pointer')
     .style('opacity', 1)
     .on('click', function (this: SVGPathElement, _event: any, d: any) {
+      svg.selectAll('.dma').style('filter', 'none').attr('stroke-width', 0.5)
+      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
       svg.selectAll('.tooltip-object').remove()
       clearTimeout(clickTimeout)
       const properties = d.properties
@@ -166,6 +168,7 @@ export function drawMap(params: any) {
 
     .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
       event.preventDefault()
+      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
@@ -174,9 +177,11 @@ export function drawMap(params: any) {
     })
     .on('touchend', function (this: SVGPathElement, _event: any, _d: any) {
       svg.selectAll('.tooltip-object').remove()
+      svg.selectAll('.dma').style('filter', 'none')
     })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
+      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)').attr('stroke-width', 1)
       isDblClickActive = true
       svg.selectAll('.tooltip-object').remove()
       clearTimeout(clickTimeout)
@@ -197,6 +202,7 @@ export function drawMap(params: any) {
   g.on('mouseleave', () => {
     if (isDblClickActive) return
     svg.selectAll('.tooltip-object').remove()
+    svg.selectAll('.dma').style('filter', 'none')
   })
 
   // reset
@@ -205,6 +211,7 @@ export function drawMap(params: any) {
     svg.selectAll('.popup-object').remove()
     svg.selectAll('.tooltip-object').remove()
     d3.select('.popup-object').style('display', 'none')
+    svg.selectAll('.dma').style('filter', 'none')
     isDblClickActive = false
   })
 
@@ -221,7 +228,7 @@ export function drawMap(params: any) {
       2,
       2 / Math.max((x1 - x0) / width, (y1 - y0) / height)
     )
-    const translateX = width * 0.25 - (scale * (x0 + x1)) / 2
+    const translateX = width * 0.39 - (scale * (x0 + x1)) / 2
     const translateY = height / 2 - (scale * (y0 + y1)) / 2
 
     const currentTransform = d3.zoomIdentity.translate(translateX, translateY).scale(scale)
