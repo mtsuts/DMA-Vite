@@ -18,8 +18,7 @@ export function drawMap(params: any) {
   const scaleExtent = [1, 8] as [number, number]
 
   // append logo
-  d3
-    .select('body')
+  d3.select('body')
     .append('div')
     .attr('class', 'logo-object')
     .style('position', 'absolute')
@@ -30,7 +29,7 @@ export function drawMap(params: any) {
     .style('padding', '5px')
     .style('text-align', 'center')
     .style('border-radius', '6px')
-    .style('background-color', 'rgba(27, 62, 95, 0.5)') 
+    .style('background-color', 'rgba(27, 62, 95, 0.5)')
     .html("<img src='./logo.svg' alt='logo'/>")
 
   // append svg to container
@@ -41,14 +40,15 @@ export function drawMap(params: any) {
     .attr('viewBox', `0 0 ${width}  ${height}`)
 
 
+
   // tooltip
   function drawTooltip(data: any) {
     const foreignObject = svg
       .append('foreignObject')
-      .attr('x', 160)
-      .attr('y', 520)
-      .attr('width', '30%')
-      .attr('height', '30%')
+      .attr('x', '5%')
+      .attr('y', '75%')
+      .attr('width', window.innerWidth > 1800 ? "600px" : '480px')
+      .attr('height', window.innerWidth > 1800 ? '420px' : '300px')
       .attr('class', 'tooltip-object')
       .style('overflow', 'visible')
       .style('background-image', "url('./tooltip-background.png')")
@@ -61,7 +61,7 @@ export function drawMap(params: any) {
       .style('position', 'absolute')
       .style('background-color', 'transparent')
       .style('color', '#fff')
-      .style('font-size', window.innerWidth > 1440 ? '18px' : '13px')
+      .style('font-size', window.innerWidth > 1800 ? '19px' :'15px')
       .style('border-radius', '10px')
       .style('padding', '10px').html(`
         <div class='tooltip'> 
@@ -131,7 +131,7 @@ export function drawMap(params: any) {
     .style('cursor', 'pointer')
     .style('opacity', 1)
     .on('click', function (this: SVGPathElement, _event: any, d: any) {
-         svg.selectAll('.tooltip-object').remove()
+      svg.selectAll('.tooltip-object').remove()
       clearTimeout(clickTimeout) // Cancel any pending single-click action
       d3.select(this).style('filter', 'brightness(1.2)')
       const properties = d.properties
@@ -193,7 +193,7 @@ export function drawMap(params: any) {
       )
   }
 
-  svg.call(zoom).on("wheel.zoom", null)
+  svg.call(zoom).on('wheel.zoom', null)
 
   function reset() {
     svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
