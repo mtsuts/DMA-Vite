@@ -39,15 +39,13 @@ export function drawMap(params: any) {
     .attr('height', height)
     .attr('viewBox', `0 0 ${width}  ${height}`)
 
-
-
   // tooltip
   function drawTooltip(data: any) {
     const foreignObject = svg
       .append('foreignObject')
       .attr('x', '5%')
       .attr('y', '75%')
-      .attr('width', window.innerWidth > 1800 ? "600px" : '480px')
+      .attr('width', window.innerWidth > 1800 ? '600px' : '480px')
       .attr('height', window.innerWidth > 1800 ? '420px' : '300px')
       .attr('class', 'tooltip-object')
       .style('overflow', 'visible')
@@ -61,7 +59,7 @@ export function drawMap(params: any) {
       .style('position', 'absolute')
       .style('background-color', 'transparent')
       .style('color', '#fff')
-      .style('font-size', window.innerWidth > 1800 ? '19px' :'15px')
+      .style('font-size', window.innerWidth > 1800 ? '19px' : '15px')
       .style('border-radius', '10px')
       .style('padding', '10px').html(`
         <div class='tooltip'> 
@@ -133,7 +131,6 @@ export function drawMap(params: any) {
     .on('click', function (this: SVGPathElement, _event: any, d: any) {
       svg.selectAll('.tooltip-object').remove()
       clearTimeout(clickTimeout) // Cancel any pending single-click action
-      d3.select(this).style('filter', 'brightness(1.2)')
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
