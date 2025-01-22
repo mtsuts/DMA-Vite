@@ -166,19 +166,19 @@ export function drawMap(params: any) {
       svg.selectAll('.dma').style('filter', 'none')
     })
 
-    .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
-      event.preventDefault()
-      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
-      const properties = d.properties
-      const foundMarket =
-        marketsData.find((x: any) => x.DMA === properties.dma1) || []
-      if (foundMarket.length === 0) return
-      drawTooltip(foundMarket)
-    })
-    .on('touchend', function (this: SVGPathElement, _event: any, _d: any) {
-      svg.selectAll('.tooltip-object').remove()
-      svg.selectAll('.dma').style('filter', 'none')
-    })
+    // .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
+    //   event.preventDefault()
+    //   d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
+    //   const properties = d.properties
+    //   const foundMarket =
+    //     marketsData.find((x: any) => x.DMA === properties.dma1) || []
+    //   if (foundMarket.length === 0) return
+    //   drawTooltip(foundMarket)
+    // })
+    // .on('touchend', function (this: SVGPathElement, _event: any, _d: any) {
+    //   svg.selectAll('.tooltip-object').remove()
+    //   svg.selectAll('.dma').style('filter', 'none')
+    // })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
       d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)').attr('stroke-width', 1)
@@ -196,7 +196,7 @@ export function drawMap(params: any) {
       drawTooltip(foundMarket)
       event.stopPropagation()
       zooming(event, d)
-      drawPopup(svg, foundData, zoom)
+      drawPopup(foundData, isDblClickActive, clickOnClose, reset)
     })
 
   g.on('mouseleave', () => {
@@ -211,7 +211,7 @@ export function drawMap(params: any) {
     svg.selectAll('.popup-object').remove()
     svg.selectAll('.tooltip-object').remove()
     d3.select('.popup-object').style('display', 'none')
-    svg.selectAll('.dma').style('filter', 'none')
+    d3.selectAll('.dma').style('filter', 'none')
     isDblClickActive = false
   })
 
@@ -232,7 +232,6 @@ export function drawMap(params: any) {
     const translateY = height / 2 - (scale * (y0 + y1)) / 2
 
     const currentTransform = d3.zoomIdentity.translate(translateX, translateY).scale(scale)
-    console.log(currentTransform)
     svg
       .transition()
       .duration(1000)
@@ -246,5 +245,12 @@ export function drawMap(params: any) {
 
   function reset() {
     svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
+  }
+
+  function clickOnClose() {
+    d3.select('.popup-object').style('display', 'none')
+    svg.selectAll('.tooltip-object').remove()
+    svg.selectAll('.dma').style('filter', 'none')
+    isDblClickActive = false
   }
 }

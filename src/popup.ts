@@ -1,13 +1,15 @@
 import { drawPiechart } from './pieChart'
 import * as d3 from 'd3'
 
-export function drawPopup(svg: any, data: any, zoom: any) {
+export function drawPopup(data: any,isDblClickActive:any, clickOnClose: Function, reset: Function) {
   const pieData = [
     { label: 'Rethink', value: Number(data.Rethink.replace('%', '')) },
     { label: 'Intercept', value: Number(data.Intercept.replace('%', '')) },
     { label: 'Nudge', value: Number(data.Nudge.replace('%', '')) },
     { label: 'Win', value: Number(data.Win.replace('%', '')) },
   ]
+
+  console.log(isDblClickActive)
 
   const tableData = [
     {
@@ -189,19 +191,10 @@ export function drawPopup(svg: any, data: any, zoom: any) {
     pieChartContainer.appendChild(pieChart)
   }
 
-  function clickOnClose() {
-    d3.select('.popup-object').style('display', 'none')
-    svg.selectAll('.tooltip-object').remove()
-    svg.selectAll('.dma').style('filter', 'none')
-  }
-
-  function reset() {
-    svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
-  }
 
   d3.select('#close_button').on('click', () => {
-    clickOnClose()
     reset()
+    clickOnClose()
   })
 
 
