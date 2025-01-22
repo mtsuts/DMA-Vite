@@ -196,7 +196,7 @@ export function drawMap(params: any) {
       drawTooltip(foundMarket)
       event.stopPropagation()
       zooming(event, d)
-      drawPopup(foundData, isDblClickActive, clickOnClose, reset)
+      drawPopup(foundData, clickOnClose, reset)
     })
 
   g.on('mouseleave', () => {

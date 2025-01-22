@@ -1,7 +1,7 @@
 import { drawPiechart } from './pieChart'
 import * as d3 from 'd3'
 
-export function drawPopup(data: any,isDblClickActive:any, clickOnClose: Function, reset: Function) {
+export function drawPopup(data: any, clickOnClose: Function, reset: Function) {
   const pieData = [
     { label: 'Rethink', value: Number(data.Rethink.replace('%', '')) },
     { label: 'Intercept', value: Number(data.Intercept.replace('%', '')) },
@@ -9,7 +9,6 @@ export function drawPopup(data: any,isDblClickActive:any, clickOnClose: Function
     { label: 'Win', value: Number(data.Win.replace('%', '')) },
   ]
 
-  console.log(isDblClickActive)
 
   const tableData = [
     {
