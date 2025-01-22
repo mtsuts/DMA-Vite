@@ -43,7 +43,6 @@
             <div> Gateway Index </div>
           </div> 
 
-  
         </div>
         <div class='total-share'> 
         <div> ${t.Total} </div>
