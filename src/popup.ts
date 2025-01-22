@@ -123,7 +123,7 @@ export function drawPopup(data: any, clickOnClose: Function, reset: Function) {
   
         </div>
         <div class='total-share'> 
-        <div> ${data.Total.replace('$', '')} </div>
+        <div> ${data.Total} </div>
         <div> total market budget </div>
         </div>
         

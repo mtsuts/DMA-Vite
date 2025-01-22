@@ -41,8 +41,9 @@ export function drawMap(params: any) {
     .attr('viewBox', `0 0 ${width}  ${height}`)
 
   // tooltip
-  function drawTooltip(data: any) {
+  const drawTooltip = (data: any) => {
     svg.selectAll('.tooltip-object').remove()
+
     const foreignObject = svg
       .append('foreignObject')
       .attr('x', '3%')
@@ -50,6 +51,7 @@ export function drawMap(params: any) {
       .attr('width', window.innerWidth > 1800 ? '600px' : '480px')
       .attr('height', window.innerWidth > 1800 ? '420px' : '300px')
       .attr('class', 'tooltip-object')
+      .attr('data-dma', data.DMA)
       .style('overflow', 'visible')
       .style('background-image', "url('./tooltip-background.png')")
       .style('background-size', '90%')
@@ -120,6 +122,7 @@ export function drawMap(params: any) {
     .enter()
     .append('path')
     .attr('class', 'dma')
+    .attr('data-dma', (d: any) => d.properties.dma1)
     .attr('d', path)
     .attr('fill', function (d: any) {
       const properties = d.properties
@@ -132,18 +135,29 @@ export function drawMap(params: any) {
     .attr('stroke-width', 0.5)
     .style('cursor', 'pointer')
     .style('opacity', 1)
+
     .on('click', function (this: SVGPathElement, _event: any, d: any) {
-      svg.selectAll('.dma').style('filter', 'none').attr('stroke-width', 0.5)
       d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
-      svg.selectAll('.tooltip-object').remove()
-      clearTimeout(clickTimeout)
+      svg.selectAll('.tooltip-object').remove();
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
+
       if (foundMarket.length === 0) return
-      clickTimeout = setTimeout(() => {
-        drawTooltip(foundMarket)
-      }, clickDelay)
+
+      drawTooltip(foundMarket) 
+
+      // const tooltipToKeep = d3.select(`.tooltip-object[data-dma="${data.DMA}"]`);
+
+      // Select all tooltips, and remove those except for the one to keep
+
+
+      // clearTimeout(clickTimeout)
+
+      // clickTimeout = setTimeout(() => {
+   
+      // }, clickDelay)
+
     })
 
     .on('mouseover', function (this: SVGPathElement, _event: any, d: any) {
@@ -156,7 +170,7 @@ export function drawMap(params: any) {
         svg.selectAll('.tooltip-object').remove()
         return
       }
-        drawTooltip(foundMarket)
+      drawTooltip(foundMarket)
       d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
     })
 
@@ -168,6 +182,7 @@ export function drawMap(params: any) {
 
     // .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
     //   event.preventDefault()
+    //   if (isDblClickActive) return
     //   d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
     //   const properties = d.properties
     //   const foundMarket =
@@ -176,16 +191,23 @@ export function drawMap(params: any) {
     //   drawTooltip(foundMarket)
     // })
     // .on('touchend', function (this: SVGPathElement, _event: any, _d: any) {
+    //   if (isDblClickActive) return
     //   svg.selectAll('.tooltip-object').remove()
     //   svg.selectAll('.dma').style('filter', 'none')
     // })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
-      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)').attr('stroke-width', 1)
+      d3.select(this)
+        .style('filter', 'contrast(1.7) saturate(1.1)')
+        .attr('stroke-width', 1)
+
       isDblClickActive = true
+
       svg.selectAll('.tooltip-object').remove()
+
       // clearTimeout(clickTimeout)
       svg.selectAll('.tooltip-object').remove()
+      
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
@@ -228,17 +250,14 @@ export function drawMap(params: any) {
       2,
       2 / Math.max((x1 - x0) / width, (y1 - y0) / height)
     )
-    const translateX = width * (window.innerWidth > 1440 ? 0.40 : 0.25) - (scale * (x0 + x1)) / 2
+    const translateX =
+      width * (window.innerWidth > 1440 ? 0.4 : 0.25) - (scale * (x0 + x1)) / 2
     const translateY = height / 2 - (scale * (y0 + y1)) / 2
 
-    const currentTransform = d3.zoomIdentity.translate(translateX, translateY).scale(scale)
-    svg
-      .transition()
-      .duration(1000)
-      .call(
-        zoom.transform,
-        currentTransform
-      )
+    const currentTransform = d3.zoomIdentity
+      .translate(translateX, translateY)
+      .scale(scale)
+    svg.transition().duration(1000).call(zoom.transform, currentTransform)
   }
 
   svg.call(zoom)
