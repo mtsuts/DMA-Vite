@@ -120,7 +120,6 @@ export function drawPopup(data: any, clickOnClose: Function, reset: Function) {
             <div> Gateway Index </div>
           </div> 
 
-  
         </div>
         <div class='total-share'> 
         <div> ${data.Total} </div>

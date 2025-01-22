@@ -30,7 +30,6 @@ export function drawMap(params: any) {
     .style('display', 'flex')
     .style('align-items', 'center')
     .style('border-radius', '6px')
-    .style('background-color', 'rgba(50, 100, 145, 0.5)')
     .html("<img src='./Spectrum_Logo_white.svg' alt='logo'/>")
 
   // append svg to container
@@ -138,26 +137,20 @@ export function drawMap(params: any) {
 
     .on('click', function (this: SVGPathElement, _event: any, d: any) {
       d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
-      svg.selectAll('.tooltip-object').remove();
+      svg.selectAll('.tooltip-object').remove()
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
 
       if (foundMarket.length === 0) return
 
-      drawTooltip(foundMarket) 
-
       // const tooltipToKeep = d3.select(`.tooltip-object[data-dma="${data.DMA}"]`);
 
-      // Select all tooltips, and remove those except for the one to keep
+      clearTimeout(clickTimeout)
 
-
-      // clearTimeout(clickTimeout)
-
-      // clickTimeout = setTimeout(() => {
-   
-      // }, clickDelay)
-
+      clickTimeout = setTimeout(() => {
+        drawTooltip(foundMarket)
+      }, clickDelay)
     })
 
     .on('mouseover', function (this: SVGPathElement, _event: any, d: any) {
@@ -207,7 +200,7 @@ export function drawMap(params: any) {
 
       // clearTimeout(clickTimeout)
       svg.selectAll('.tooltip-object').remove()
-      
+
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
