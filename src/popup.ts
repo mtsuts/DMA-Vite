@@ -192,6 +192,7 @@ export function drawPopup(svg: any, data: any, zoom: any) {
   function clickOnClose() {
     d3.select('.popup-object').style('display', 'none')
     svg.selectAll('.tooltip-object').remove()
+    svg.selectAll('.dma').style('filter', 'none')
   }
 
   function reset() {
@@ -202,4 +203,6 @@ export function drawPopup(svg: any, data: any, zoom: any) {
     clickOnClose()
     reset()
   })
+
+
 }
