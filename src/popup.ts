@@ -78,12 +78,11 @@ export function drawPopup(data: any, clickOnClose: Function, reset: Function) {
   popupDiv.html(`
 
     <div class='popup'> 
-
     <div id='close_button' class='close-icon'>
     <img src='./close-icon.svg' alt=''close-icon />
     </div>
       <div class='popup-logo'>
-      <img src='./popup-logo.svg' width='140px' alt='popup-logo'/>
+      <img src='./Spectrum_Logo_white.svg' width='140px' alt='popup-logo'/>
         </div>
     
 

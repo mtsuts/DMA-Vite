@@ -90,6 +90,17 @@ body {
   height: 425px;
 }
 
+/* Hide scrollbar for WebKit browsers */
+.popup-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.popup-content {
+  scrollbar-width: none; /* Disable scrollbar */
+  -ms-overflow-style: none; /* For Internet Explorer 10+ */
+}
+
 .close-icon {
   position: absolute;
   top: 10px;
@@ -99,16 +110,19 @@ body {
 
 .popup-logo {
   position: absolute;
-  bottom: 10px;
+  bottom: -40px;
   right: 40px;
-  background-color: rgba(27, 62, 95, 0.5);
+  background-color: rgba(50, 100, 145, 0.5);
   padding: 5px;
   text-align: center;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  width: 120px
 }
 
 .popup-title {
-  width: 350px;
+  width: 400px;
   text-align: center;
 }
 

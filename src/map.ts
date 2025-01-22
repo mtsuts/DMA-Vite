@@ -24,13 +24,14 @@ export function drawMap(params: any) {
     .style('position', 'absolute')
     .style('left', '40px')
     .style('top', '30px')
-    .style('width', '200px')
+    .style('width', '150px')
     .style('height', '40px')
     .style('padding', '5px')
-    .style('text-align', 'center')
+    .style('display', 'flex')
+    .style('align-items', 'center')
     .style('border-radius', '6px')
-    .style('background-color', 'rgba(27, 62, 95, 0.5)')
-    .html("<img src='./logo.svg' alt='logo'/>")
+    .style('background-color', 'rgba(50, 100, 145, 0.5)')
+    .html("<img src='./Spectrum_Logo_white.svg' alt='logo'/>")
 
   // append svg to container
   const svg = container
@@ -151,18 +152,17 @@ export function drawMap(params: any) {
       const properties = d.properties
       const foundMarket =
         marketsData.find((x: any) => x.DMA === properties.dma1) || []
-      if (foundMarket.length === 0) return
-      clickTimeout = setTimeout(() => {
+      if (foundMarket.length === 0) {
+        svg.selectAll('.tooltip-object').remove()
+        return
+      }
         drawTooltip(foundMarket)
-      }, clickDelay)
-
       d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
     })
 
     .on('mouseleave', function (this: SVGPathElement, _event: any, _d: any) {
       if (isTouchDevice) return
       if (isDblClickActive) return
-      clearTimeout(clickTimeout)
       svg.selectAll('.dma').style('filter', 'none')
     })
 
@@ -184,7 +184,7 @@ export function drawMap(params: any) {
       d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)').attr('stroke-width', 1)
       isDblClickActive = true
       svg.selectAll('.tooltip-object').remove()
-      clearTimeout(clickTimeout)
+      // clearTimeout(clickTimeout)
       svg.selectAll('.tooltip-object').remove()
       const properties = d.properties
       const foundMarket =
