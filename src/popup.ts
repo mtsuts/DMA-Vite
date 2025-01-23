@@ -14,7 +14,7 @@ export function drawPopup(data: any, clickOnClose: Function, reset: Function) {
     {
       label: 'Rethink',
       properties: [
-        'Linear TV',
+        'TV',
         'CTV',
         'Radio',
         'Sponsorships',

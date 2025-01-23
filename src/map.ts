@@ -153,41 +153,32 @@ export function drawMap(params: any) {
       }, clickDelay)
     })
 
-    .on('mouseover', function (this: SVGPathElement, _event: any, d: any) {
-      if (isDblClickActive) return
-      if (isTouchDevice) return
-      const properties = d.properties
-      const foundMarket =
-        marketsData.find((x: any) => x.DMA === properties.dma1) || []
-      if (foundMarket.length === 0) {
-        svg.selectAll('.tooltip-object').remove()
-        return
+    .on(
+      'mouseover touchstart',
+      function (this: SVGPathElement, event: any, d: any) {
+        if (isDblClickActive) return
+        if (isTouchDevice && event.type === 'touchstart') event.preventDefault()
+
+        const properties = d.properties
+        const foundMarket =
+          marketsData.find((x: any) => x.DMA === properties.dma1) || []
+
+        if (foundMarket.length === 0) {
+          svg.selectAll('.tooltip-object').remove()
+          return
+        }
+
+        drawTooltip(foundMarket)
+        d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
       }
-      drawTooltip(foundMarket)
-      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
-    })
-
-    .on('mouseleave', function (this: SVGPathElement, _event: any, _d: any) {
-      if (isTouchDevice) return
-      if (isDblClickActive) return
-      svg.selectAll('.dma').style('filter', 'none')
-    })
-
-    // .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
-    //   event.preventDefault()
-    //   if (isDblClickActive) return
-    //   d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
-    //   const properties = d.properties
-    //   const foundMarket =
-    //     marketsData.find((x: any) => x.DMA === properties.dma1) || []
-    //   if (foundMarket.length === 0) return
-    //   drawTooltip(foundMarket)
-    // })
-    // .on('touchend', function (this: SVGPathElement, _event: any, _d: any) {
-    //   if (isDblClickActive) return
-    //   svg.selectAll('.tooltip-object').remove()
-    //   svg.selectAll('.dma').style('filter', 'none')
-    // })
+    )
+    .on(
+      'mouseleave touchend',
+      function (this: SVGPathElement, _event: any, _d: any) {
+        if (isDblClickActive) return
+        svg.selectAll('.dma').style('filter', 'none')
+      }
+    )
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
       d3.select(this)
