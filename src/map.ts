@@ -114,8 +114,9 @@ export function drawMap(params: any) {
   const clickDelay = 300
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   let isDblClickActive = false
+  let currentDma: any = null
 
-  dmaPath
+  const dmaSel = dmaPath
     .selectAll('.dma')
     .data(dma.features)
     .enter()
@@ -136,51 +137,68 @@ export function drawMap(params: any) {
     .style('opacity', 1)
 
     .on('click', function (this: SVGPathElement, _event: any, d: any) {
-      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
-      svg.selectAll('.tooltip-object').remove()
-      const properties = d.properties
-      const foundMarket =
-        marketsData.find((x: any) => x.DMA === properties.dma1) || []
+      _event.stopPropagation()
 
-      if (foundMarket.length === 0) return
+      if (isDblClickActive) return
+
+      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
+
+      if (currentDma === d.properties.dma1) {
+        return
+      }
+
+      svg.selectAll('.tooltip-object').remove()
+
+      const properties = d.properties
+      const foundMarket = marketsData.find(
+        (x: any) => x.DMA === properties.dma1
+      )
+
+      if (!foundMarket) return
 
       // const tooltipToKeep = d3.select(`.tooltip-object[data-dma="${data.DMA}"]`);
 
-      clearTimeout(clickTimeout)
+      // clearTimeout(clickTimeout)
 
-      clickTimeout = setTimeout(() => {
-        drawTooltip(foundMarket)
-      }, clickDelay)
+      // clickTimeout = setTimeout(() => {
+      drawTooltip(foundMarket)
+      // }, clickDelay)
     })
 
-    .on(
-      'mouseover',
-      function (this: SVGPathElement, event: any, d: any) {
-        if (isDblClickActive) return
-        if (isTouchDevice && event.type === 'touchstart') event.preventDefault()
+    .on('mouseover', function (this: SVGPathElement, event: any, d: any) {
+      if (isDblClickActive) return
+      if (isTouchDevice && event.type === 'touchstart') event.preventDefault()
 
-        const properties = d.properties
-        const foundMarket =
-          marketsData.find((x: any) => x.DMA === properties.dma1) || []
+      const properties = d.properties
+      const foundMarket = marketsData.find(
+        (x: any) => x.DMA === properties.dma1
+      )
 
-        if (foundMarket.length === 0) {
-          svg.selectAll('.tooltip-object').remove()
-          return
-        }
-
-        drawTooltip(foundMarket)
-        d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
+      if (!foundMarket) {
+        svg.selectAll('.tooltip-object').remove()
+        return
       }
-    )
-    .on(
-      'mouseleave',
-      function (this: SVGPathElement, _event: any, _d: any) {
-        if (isDblClickActive) return
-        svg.selectAll('.dma').style('filter', 'none')
-      }
-    )
+
+      currentDma = properties.dma1
+      drawTooltip(foundMarket)
+      d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
+    })
+    .on('mouseleave', function (this: SVGPathElement, _event: any, _d: any) {
+      if (isDblClickActive) return
+      currentDma = null
+      svg.selectAll('.dma').style('filter', 'none')
+    })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
+      event.stopPropagation()
+
+      const properties = d.properties
+      const foundMarket = marketsData.find(
+        (x: any) => x.DMA === properties.dma1
+      )
+
+      if (!foundMarket) return
+      dmaSel.style('filter', 'none')
       d3.select(this)
         .style('filter', 'contrast(1.7) saturate(1.1)')
         .attr('stroke-width', 1)
@@ -189,18 +207,13 @@ export function drawMap(params: any) {
 
       svg.selectAll('.tooltip-object').remove()
 
-      // clearTimeout(clickTimeout)
       svg.selectAll('.tooltip-object').remove()
 
-      const properties = d.properties
-      const foundMarket =
-        marketsData.find((x: any) => x.DMA === properties.dma1) || []
-      if (foundMarket.length === 0) return
       const foundData = data.find(
         (market: any) => foundMarket.Priority === market.Priority
       )
+
       drawTooltip(foundMarket)
-      event.stopPropagation()
       zooming(event, d)
       drawPopup(foundData, clickOnClose, reset)
     })
