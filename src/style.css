@@ -25,11 +25,7 @@ body {
   background-repeat: no-repeat;
   min-height: 100vh;
   height: 100%;
-  touch-action: auto;
-  overscroll-behavior: none; /* Prevents overscroll handling */
 }
-
-
 
 .map-container {
   display: flex;
