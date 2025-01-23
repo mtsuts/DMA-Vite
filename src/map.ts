@@ -154,7 +154,7 @@ export function drawMap(params: any) {
     })
 
     .on(
-      'mouseover touchstart',
+      'mouseover',
       function (this: SVGPathElement, event: any, d: any) {
         if (isDblClickActive) return
         if (isTouchDevice && event.type === 'touchstart') event.preventDefault()
@@ -173,7 +173,7 @@ export function drawMap(params: any) {
       }
     )
     .on(
-      'mouseleave touchend',
+      'mouseleave',
       function (this: SVGPathElement, _event: any, _d: any) {
         if (isDblClickActive) return
         svg.selectAll('.dma').style('filter', 'none')

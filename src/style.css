@@ -25,6 +25,8 @@ body {
   background-repeat: no-repeat;
   min-height: 100vh;
   height: 100%;
+  touch-action: auto;
+  overscroll-behavior: none; /* Prevents overscroll handling */
 }
 
 
@@ -216,7 +218,6 @@ body {
   top: 18px;
   left: 170px;
 }
-
 
 
 .dma:focus {
