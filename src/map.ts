@@ -110,8 +110,6 @@ export function drawMap(params: any) {
     .domain(['Top Tier', 'Mid Tier', 'Non-Broadcast'])
     .range(['#6997ac', '#96bdcf', '#bbe0f3'])
 
-  let clickTimeout: any
-  const clickDelay = 300
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   let isDblClickActive = false
   let currentDma: any = null
@@ -120,20 +118,21 @@ export function drawMap(params: any) {
 
   // Handle touchstart event
   const handleTouchStart = function (this: SVGPathElement, event: any, d: any) {
-    const currentTime = Date.now()
-    const timeDifference = currentTime - lastTouchTime
-
+    const currentTime = Date.now();
+    const timeDifference = currentTime - lastTouchTime;
+  
     if (timeDifference <= DOUBLE_TAP_THRESHOLD) {
-      // Simulate double-click logic
-      handleDblClick.call(this, event, d)
+      // Double-tap detected
+      handleDblClick.call(this, event, d);
+    } else {
+      lastTouchTime = currentTime;
     }
-
-    lastTouchTime = currentTime
-  }
-
+  };
+  
   // Handle double-click (for mouse)
   const handleDblClick = function (this: SVGPathElement, event: any, d: any) {
     event.stopPropagation()
+    isDblClickActive = true
 
     const properties = d.properties
     const foundMarket = marketsData.find((x: any) => x.DMA === properties.dma1)
@@ -144,7 +143,6 @@ export function drawMap(params: any) {
       .style('filter', 'contrast(1.7) saturate(1.1)')
       .attr('stroke-width', 1)
 
-    isDblClickActive = true
     const foundData = data.find(
       (market: any) => foundMarket.Priority === market.Priority
     )
@@ -175,10 +173,8 @@ export function drawMap(params: any) {
     .style('cursor', 'pointer')
     .style('opacity', 1)
 
-    .on('click', function (this: SVGPathElement, _event: any, d: any) {
-      _event.stopPropagation()
-      console.log('clicked')
-
+    .on('click', function (this: SVGPathElement, event: any, d: any) {
+      event.stopPropagation()
       if (isDblClickActive) return
 
       d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
@@ -195,8 +191,6 @@ export function drawMap(params: any) {
       )
 
       if (!foundMarket) return
-
-      // const tooltipToKeep = d3.select(`.tooltip-object[data-dma="${data.DMA}"]`);
 
       // clearTimeout(clickTimeout)
 
@@ -230,13 +224,13 @@ export function drawMap(params: any) {
     })
 
     .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
-      handleTouchStart.call(this, event, d);
+        handleTouchStart.call(this, event, d)
     })
-    .on('touchend', function (this: SVGPathElement, event: any, d: any) {
-      if (!isDblClickActive) {
-        handleDblClick.call(this, event, d);
-      }
-    })
+    // .on('touchend', function (this: SVGPathElement, event: any, d: any) {
+    //   if (!isDblClickActive) {
+    //     handleDblClick.call(this, event, d)
+    //   }
+    // })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
       handleDblClick.call(this, event, d)
