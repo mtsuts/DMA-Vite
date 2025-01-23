@@ -115,6 +115,45 @@ export function drawMap(params: any) {
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   let isDblClickActive = false
   let currentDma: any = null
+  let lastTouchTime = 0 // To track the time of the last touch event
+  const DOUBLE_TAP_THRESHOLD = 300 // Max time between taps (ms)
+
+  // Handle touchstart event
+  const handleTouchStart = function (this: SVGPathElement, event: any, d: any) {
+    const currentTime = Date.now()
+    const timeDifference = currentTime - lastTouchTime
+
+    if (timeDifference <= DOUBLE_TAP_THRESHOLD) {
+      // Simulate double-click logic
+      handleDblClick.call(this, event, d)
+    }
+
+    lastTouchTime = currentTime
+  }
+
+  // Handle double-click (for mouse)
+  const handleDblClick = function (this: SVGPathElement, event: any, d: any) {
+    event.stopPropagation()
+
+    const properties = d.properties
+    const foundMarket = marketsData.find((x: any) => x.DMA === properties.dma1)
+
+    if (!foundMarket) return
+    dmaSel.style('filter', 'none')
+    d3.select(this)
+      .style('filter', 'contrast(1.7) saturate(1.1)')
+      .attr('stroke-width', 1)
+
+    isDblClickActive = true
+    const foundData = data.find(
+      (market: any) => foundMarket.Priority === market.Priority
+    )
+
+    svg.selectAll('.tooltip-object').remove()
+    drawTooltip(foundMarket)
+    zooming(event, d)
+    drawPopup(foundData, clickOnClose, reset)
+  }
 
   const dmaSel = dmaPath
     .selectAll('.dma')
@@ -138,6 +177,7 @@ export function drawMap(params: any) {
 
     .on('click', function (this: SVGPathElement, _event: any, d: any) {
       _event.stopPropagation()
+      console.log('clicked')
 
       if (isDblClickActive) return
 
@@ -189,33 +229,17 @@ export function drawMap(params: any) {
       svg.selectAll('.dma').style('filter', 'none')
     })
 
+    .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
+      handleTouchStart.call(this, event, d);
+    })
+    .on('touchend', function (this: SVGPathElement, event: any, d: any) {
+      if (!isDblClickActive) {
+        handleDblClick.call(this, event, d);
+      }
+    })
+
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
-      event.stopPropagation()
-
-      const properties = d.properties
-      const foundMarket = marketsData.find(
-        (x: any) => x.DMA === properties.dma1
-      )
-
-      if (!foundMarket) return
-      dmaSel.style('filter', 'none')
-      d3.select(this)
-        .style('filter', 'contrast(1.7) saturate(1.1)')
-        .attr('stroke-width', 1)
-
-      isDblClickActive = true
-
-      svg.selectAll('.tooltip-object').remove()
-
-      svg.selectAll('.tooltip-object').remove()
-
-      const foundData = data.find(
-        (market: any) => foundMarket.Priority === market.Priority
-      )
-
-      drawTooltip(foundMarket)
-      zooming(event, d)
-      drawPopup(foundData, clickOnClose, reset)
+      handleDblClick.call(this, event, d)
     })
 
   g.on('mouseleave', () => {
@@ -229,7 +253,7 @@ export function drawMap(params: any) {
     reset()
     svg.selectAll('.popup-object').remove()
     svg.selectAll('.tooltip-object').remove()
-    d3.select('.popup-object').style('display', 'none')
+    d3.selectAll('.popup-object').style('display', 'none')
     d3.selectAll('.dma').style('filter', 'none')
     isDblClickActive = false
   })
