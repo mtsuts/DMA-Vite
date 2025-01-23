@@ -113,22 +113,52 @@ export function drawMap(params: any) {
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   let isDblClickActive = false
   let currentDma: any = null
-  let lastTouchTime = 0 // To track the time of the last touch event
-  const DOUBLE_TAP_THRESHOLD = 300 // Max time between taps (ms)
+  let lastTouchTime = 0 
+  const DOUBLE_TAP_THRESHOLD = 300 
+  const TOUCH_MOVE_THRESHOLD = 10 
+  let isDragging = false; 
+  let lastTouchPosition: { x: number; y: number } | null = null;
 
-  // Handle touchstart event
-  const handleTouchStart = function (this: SVGPathElement, event: any, d: any) {
-    const currentTime = Date.now();
-    const timeDifference = currentTime - lastTouchTime;
-  
-    if (timeDifference <= DOUBLE_TAP_THRESHOLD) {
-      // Double-tap detected
-      handleDblClick.call(this, event, d);
-    } else {
-      lastTouchTime = currentTime;
-    }
-  };
-  
+
+// Handle touchstart event
+const handleTouchStart = function (this: SVGPathElement, event: TouchEvent, d: any) {
+  const currentTime = Date.now();
+  const touches = event.touches[0];
+  lastTouchPosition = { x: touches.clientX, y: touches.clientY };
+
+  const timeDifference = currentTime - lastTouchTime;
+
+  if (timeDifference <= DOUBLE_TAP_THRESHOLD) {
+    // Simulate double-click logic
+    handleDblClick.call(this, event, d);
+    lastTouchTime = 0; 
+  } else {
+    lastTouchTime = currentTime;
+    isDragging = false;
+  }
+};
+
+// Handle touchmove event
+const handleTouchMove = function (this: SVGPathElement, event: TouchEvent) {
+  if (!lastTouchPosition) return;
+
+  const touches = event.touches[0];
+  const dx = Math.abs(touches.clientX - lastTouchPosition.x);
+  const dy = Math.abs(touches.clientY - lastTouchPosition.y);
+
+  if (dx > TOUCH_MOVE_THRESHOLD || dy > TOUCH_MOVE_THRESHOLD) {
+    isDragging = true; 
+  }
+};
+
+// Handle touchend event (if needed)
+const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: any) {
+  if (isDragging) {
+    // Prevent tap logic when dragging
+    return;
+  }
+}
+
   // Handle double-click (for mouse)
   const handleDblClick = function (this: SVGPathElement, event: any, d: any) {
     event.stopPropagation()
@@ -224,13 +254,15 @@ export function drawMap(params: any) {
     })
 
     .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
-        handleTouchStart.call(this, event, d)
+      handleTouchStart.call(this, event, d)
     })
-    // .on('touchend', function (this: SVGPathElement, event: any, d: any) {
-    //   if (!isDblClickActive) {
-    //     handleDblClick.call(this, event, d)
-    //   }
-    // })
+
+    .on('touchmove', function (this: SVGPathElement, event: TouchEvent) {
+      handleTouchMove.call(this, event);
+    })
+    .on('touchend', function (this: SVGPathElement, event: TouchEvent, d: any) {
+      handleTouchEnd.call(this, event, d);
+    })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
       handleDblClick.call(this, event, d)
