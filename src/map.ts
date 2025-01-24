@@ -110,30 +110,68 @@ export function drawMap(params: any) {
     .domain(['Top Tier', 'Mid Tier', 'Non-Broadcast'])
     .range(['#6997ac', '#96bdcf', '#bbe0f3'])
 
-  let clickTimeout: any
-  const clickDelay = 300
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   let isDblClickActive = false
   let currentDma: any = null
-  let lastTouchTime = 0 // To track the time of the last touch event
-  const DOUBLE_TAP_THRESHOLD = 300 // Max time between taps (ms)
+  let lastTouchTime = 0
+  const DOUBLE_TAP_THRESHOLD = 300
+  const TOUCH_MOVE_THRESHOLD = 10
+  let isDragging = false
+  let lastTouchPosition: { x: number; y: number } | null = null
+  let isClicked = false
 
   // Handle touchstart event
-  const handleTouchStart = function (this: SVGPathElement, event: any, d: any) {
+  const handleTouchStart = function (
+    this: SVGPathElement,
+    event: TouchEvent,
+    d: any
+  ) {
     const currentTime = Date.now()
+    const touches = event.touches[0]
+    lastTouchPosition = { x: touches.clientX, y: touches.clientY }
+
     const timeDifference = currentTime - lastTouchTime
 
     if (timeDifference <= DOUBLE_TAP_THRESHOLD) {
-      // Simulate double-click logic
-      handleDblClick.call(this, event, d)
+      if (isClicked) {
+        handleDblClick.call(this, event, d)
+      }
+      lastTouchTime = 0
+    } else {
+      lastTouchTime = currentTime
+      isDragging = false
     }
+  }
 
-    lastTouchTime = currentTime
+  // Handle touchmove event
+  const handleTouchMove = function (this: SVGPathElement, event: TouchEvent) {
+    if (!lastTouchPosition) return
+
+    const touches = event.touches[0]
+    const dx = Math.abs(touches.clientX - lastTouchPosition.x)
+    const dy = Math.abs(touches.clientY - lastTouchPosition.y)
+
+    if (dx > TOUCH_MOVE_THRESHOLD || dy > TOUCH_MOVE_THRESHOLD) {
+      isDragging = true
+    }
+  }
+
+  // Handle touchend event (if needed)
+  const handleTouchEnd = function (
+    this: SVGPathElement,
+    _event: TouchEvent,
+    _d: any
+  ) {
+    if (isDragging) {
+      // Prevent tap logic when dragging
+      return
+    }
   }
 
   // Handle double-click (for mouse)
   const handleDblClick = function (this: SVGPathElement, event: any, d: any) {
     event.stopPropagation()
+    isDblClickActive = true
 
     const properties = d.properties
     const foundMarket = marketsData.find((x: any) => x.DMA === properties.dma1)
@@ -144,7 +182,6 @@ export function drawMap(params: any) {
       .style('filter', 'contrast(1.7) saturate(1.1)')
       .attr('stroke-width', 1)
 
-    isDblClickActive = true
     const foundData = data.find(
       (market: any) => foundMarket.Priority === market.Priority
     )
@@ -168,6 +205,7 @@ export function drawMap(params: any) {
       const foundMarket = marketsData.find(
         (x: any) => x.DMA === properties.dma1
       )
+
       return foundMarket ? colorScale(foundMarket['Market Type']) : '#fff'
     })
     .attr('stroke', '#80807e')
@@ -175,10 +213,9 @@ export function drawMap(params: any) {
     .style('cursor', 'pointer')
     .style('opacity', 1)
 
-    .on('click', function (this: SVGPathElement, _event: any, d: any) {
-      _event.stopPropagation()
-      console.log('clicked')
-
+    .on('click', function (this: SVGPathElement, event: any, d: any) {
+      isClicked = true
+      event.stopPropagation()
       if (isDblClickActive) return
 
       d3.select(this).style('filter', 'contrast(1.7) saturate(1.1)')
@@ -195,8 +232,6 @@ export function drawMap(params: any) {
       )
 
       if (!foundMarket) return
-
-      // const tooltipToKeep = d3.select(`.tooltip-object[data-dma="${data.DMA}"]`);
 
       // clearTimeout(clickTimeout)
 
@@ -230,12 +265,14 @@ export function drawMap(params: any) {
     })
 
     .on('touchstart', function (this: SVGPathElement, event: any, d: any) {
-      handleTouchStart.call(this, event, d);
+      handleTouchStart.call(this, event, d)
     })
-    .on('touchend', function (this: SVGPathElement, event: any, d: any) {
-      if (!isDblClickActive) {
-        handleDblClick.call(this, event, d);
-      }
+
+    .on('touchmove', function (this: SVGPathElement, event: TouchEvent) {
+      handleTouchMove.call(this, event)
+    })
+    .on('touchend', function (this: SVGPathElement, event: TouchEvent, d: any) {
+      handleTouchEnd.call(this, event, d)
     })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
@@ -284,10 +321,12 @@ export function drawMap(params: any) {
   svg.call(zoom)
 
   function reset() {
+    isClicked = false
     svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
   }
 
   function clickOnClose() {
+    isClicked = false
     d3.select('.popup-object').style('display', 'none')
     svg.selectAll('.tooltip-object').remove()
     svg.selectAll('.dma').style('filter', 'none')

@@ -25,6 +25,7 @@ body {
   background-repeat: no-repeat;
   min-height: 100vh;
   height: 100%;
+  overflow: hidden;
 }
 
 .map-container {
