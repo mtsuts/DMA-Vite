@@ -113,51 +113,60 @@ export function drawMap(params: any) {
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   let isDblClickActive = false
   let currentDma: any = null
-  let lastTouchTime = 0 
-  const DOUBLE_TAP_THRESHOLD = 300 
-  const TOUCH_MOVE_THRESHOLD = 10 
-  let isDragging = false; 
-  let lastTouchPosition: { x: number; y: number } | null = null;
+  let lastTouchTime = 0
+  const DOUBLE_TAP_THRESHOLD = 300
+  const TOUCH_MOVE_THRESHOLD = 10
+  let isDragging = false
+  let lastTouchPosition: { x: number; y: number } | null = null
+  let isClicked = false
 
+  // Handle touchstart event
+  const handleTouchStart = function (
+    this: SVGPathElement,
+    event: TouchEvent,
+    d: any
+  ) {
+    const currentTime = Date.now()
+    const touches = event.touches[0]
+    lastTouchPosition = { x: touches.clientX, y: touches.clientY }
 
-// Handle touchstart event
-const handleTouchStart = function (this: SVGPathElement, event: TouchEvent, d: any) {
-  const currentTime = Date.now();
-  const touches = event.touches[0];
-  lastTouchPosition = { x: touches.clientX, y: touches.clientY };
+    const timeDifference = currentTime - lastTouchTime
 
-  const timeDifference = currentTime - lastTouchTime;
-
-  if (timeDifference <= DOUBLE_TAP_THRESHOLD) {
-    // Simulate double-click logic
-    handleDblClick.call(this, event, d);
-    lastTouchTime = 0; 
-  } else {
-    lastTouchTime = currentTime;
-    isDragging = false;
+    if (timeDifference <= DOUBLE_TAP_THRESHOLD) {
+      if (isClicked) {
+        handleDblClick.call(this, event, d)
+      }
+      lastTouchTime = 0
+    } else {
+      lastTouchTime = currentTime
+      isDragging = false
+    }
   }
-};
 
-// Handle touchmove event
-const handleTouchMove = function (this: SVGPathElement, event: TouchEvent) {
-  if (!lastTouchPosition) return;
+  // Handle touchmove event
+  const handleTouchMove = function (this: SVGPathElement, event: TouchEvent) {
+    if (!lastTouchPosition) return
 
-  const touches = event.touches[0];
-  const dx = Math.abs(touches.clientX - lastTouchPosition.x);
-  const dy = Math.abs(touches.clientY - lastTouchPosition.y);
+    const touches = event.touches[0]
+    const dx = Math.abs(touches.clientX - lastTouchPosition.x)
+    const dy = Math.abs(touches.clientY - lastTouchPosition.y)
 
-  if (dx > TOUCH_MOVE_THRESHOLD || dy > TOUCH_MOVE_THRESHOLD) {
-    isDragging = true; 
+    if (dx > TOUCH_MOVE_THRESHOLD || dy > TOUCH_MOVE_THRESHOLD) {
+      isDragging = true
+    }
   }
-};
 
-// Handle touchend event (if needed)
-const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: any) {
-  if (isDragging) {
-    // Prevent tap logic when dragging
-    return;
+  // Handle touchend event (if needed)
+  const handleTouchEnd = function (
+    this: SVGPathElement,
+    _event: TouchEvent,
+    _d: any
+  ) {
+    if (isDragging) {
+      // Prevent tap logic when dragging
+      return
+    }
   }
-}
 
   // Handle double-click (for mouse)
   const handleDblClick = function (this: SVGPathElement, event: any, d: any) {
@@ -196,7 +205,7 @@ const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: a
       const foundMarket = marketsData.find(
         (x: any) => x.DMA === properties.dma1
       )
-      
+
       return foundMarket ? colorScale(foundMarket['Market Type']) : '#fff'
     })
     .attr('stroke', '#80807e')
@@ -205,6 +214,7 @@ const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: a
     .style('opacity', 1)
 
     .on('click', function (this: SVGPathElement, event: any, d: any) {
+      isClicked = true
       event.stopPropagation()
       if (isDblClickActive) return
 
@@ -239,7 +249,6 @@ const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: a
         (x: any) => x.DMA === properties.dma1
       )
 
-
       if (!foundMarket) {
         svg.selectAll('.tooltip-object').remove()
         return
@@ -260,10 +269,10 @@ const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: a
     })
 
     .on('touchmove', function (this: SVGPathElement, event: TouchEvent) {
-      handleTouchMove.call(this, event);
+      handleTouchMove.call(this, event)
     })
     .on('touchend', function (this: SVGPathElement, event: TouchEvent, d: any) {
-      handleTouchEnd.call(this, event, d);
+      handleTouchEnd.call(this, event, d)
     })
 
     .on('dblclick', function (this: SVGPathElement, event: any, d: any) {
@@ -312,10 +321,12 @@ const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: a
   svg.call(zoom)
 
   function reset() {
+    isClicked = false
     svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity)
   }
 
   function clickOnClose() {
+    isClicked = false
     d3.select('.popup-object').style('display', 'none')
     svg.selectAll('.tooltip-object').remove()
     svg.selectAll('.dma').style('filter', 'none')
