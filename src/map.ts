@@ -196,6 +196,7 @@ const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: a
       const foundMarket = marketsData.find(
         (x: any) => x.DMA === properties.dma1
       )
+      
       return foundMarket ? colorScale(foundMarket['Market Type']) : '#fff'
     })
     .attr('stroke', '#80807e')
@@ -237,6 +238,7 @@ const handleTouchEnd = function (this: SVGPathElement, _event: TouchEvent, _d: a
       const foundMarket = marketsData.find(
         (x: any) => x.DMA === properties.dma1
       )
+
 
       if (!foundMarket) {
         svg.selectAll('.tooltip-object').remove()
